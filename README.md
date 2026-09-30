@@ -2,7 +2,7 @@
 
 An interactive, bilingual architecture model for cities that share infrastructure, make informed decisions, and learn from outcomes.
 
-Public origin: https://stadtstack.eu. Deployment is owner-controlled; this repository does not claim the new host is already live.
+Live at https://stadtstack.eu since 30 September 2026, on the owner's Talos cluster (Helm release `stadtstack-site`). `www.stadtstack.eu` redirects to the apex and `roebel.stadtstack.eu` to the Röbel pilot apps.
 
 ## Explore
 

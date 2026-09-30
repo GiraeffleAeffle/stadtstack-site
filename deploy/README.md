@@ -1,10 +1,10 @@
 # Stadtstack site: bounded release for owner review
 
-This directory is a release recipe, **not a claim that the site is live**. It has not operated DNS or the cluster. The public origin is `https://stadtstack.eu`; `www.stadtstack.eu` reaches the same site, and the separate `roebel.stadtstack.eu` Ingress reaches the image's nginx redirect. nginx configuration is baked into the Docker image from `deploy/nginx.conf`, not mounted from a ConfigMap.
+Released on 30 September 2026 through the owner's wrapper `infra/hetzner-talos/scripts/apply-live-stadtstack-site.sh` (in `strausberg-zk-residency`): namespace, then Helm revision 1 with image `sha256:3904a89a…`; both certificates became Ready and the public checks passed (apex 200, www and roebel 301, fonts and the 3D model load). DNS for `stadtstack.eu`, `www` and `roebel` points at the cluster ingress `77.42.11.9`. The public origin is `https://stadtstack.eu`; `www.stadtstack.eu` reaches the same site, and the separate `roebel.stadtstack.eu` Ingress reaches the image's nginx redirect. nginx configuration is baked into the Docker image from `deploy/nginx.conf`, not mounted from a ConfigMap.
 
 ## Digest gate and safe release
 
-The intentionally empty `image.digest` in `values/stadtstack.eu.yaml` blocks rendering and every script mode. Publish the reviewed image as a public `ghcr.io/giraeffleaeffle/stadtstack-site` package, then record its immutable `sha256:` digest (exactly 64 lowercase hex characters) in that values file and commit the reviewed deployment tree. No tags, pull secrets or private configuration are needed.
+`image.digest` in `values/stadtstack.eu.yaml` must be a reviewed public `ghcr.io/giraeffleaeffle/stadtstack-site` digest (exactly 64 lowercase hex characters after `sha256:`); an empty digest blocks rendering and every script mode. Build a new image by pushing an `image-*` tag, pin the printed digest here and commit before releasing. No tags, pull secrets or private configuration are needed.
 
 The owner's external parent wrapper must export the **committed** `deploy/` snapshot, supply `KUBECTL` and `KUBECONFIG` for its bounded session, and run this script inside that snapshot. Do not substitute an uncommitted working tree. The wrapper is maintained outside this site repository; its session safeguards remain the owner's responsibility.
 
