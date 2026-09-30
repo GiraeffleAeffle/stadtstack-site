@@ -1,0 +1,18 @@
+helmDefaults:
+  atomic: true
+  cleanupOnFail: true
+  createNamespace: false
+  historyMax: 10
+  timeout: 600
+  wait: true
+  waitForJobs: true
+
+releases:
+  - name: stadtstack-site
+    namespace: stadtstack-site
+    chart: ./chart
+    installed: true
+    labels:
+      app: stadtstack-site
+    values:
+      - ./values/stadtstack.eu.yaml

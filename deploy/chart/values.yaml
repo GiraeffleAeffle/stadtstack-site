@@ -1,0 +1,27 @@
+image:
+  repository: ghcr.io/giraeffleaeffle/stadtstack-site
+  digest: ""
+hosts:
+  site:
+    - stadtstack.eu
+    - www.stadtstack.eu
+  roebel: roebel.stadtstack.eu
+resources:
+  requests:
+    cpu: 50m
+    memory: 32Mi
+  limits:
+    cpu: 500m
+    memory: 128Mi
+ingress:
+  clusterIssuer: letsencrypt-prod
+  haproxySources:
+    - 10.42.0.10/32
+    - 10.42.0.11/32
+    - 10.42.0.12/32
+    - 10.244.0.0/32
+    - 10.244.1.0/32
+    - 10.244.2.0/32
+    - 10.244.0.1/32
+    - 10.244.1.1/32
+    - 10.244.2.1/32

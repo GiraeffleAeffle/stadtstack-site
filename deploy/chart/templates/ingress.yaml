@@ -1,0 +1,34 @@
+{{- range $route := list (dict "name" "stadtstack-site" "hosts" .Values.hosts.site "secret" "stadtstack-site-tls") (dict "name" "stadtstack-roebel-redirect" "hosts" (list .Values.hosts.roebel) "secret" "stadtstack-roebel-redirect-tls") }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $route.name }}
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    {{- include "stadtstack.labels" $ | nindent 4 }}
+  annotations:
+    cert-manager.io/cluster-issuer: {{ $.Values.ingress.clusterIssuer | quote }}
+    haproxy-ingress.github.io/ssl-redirect: "true"
+spec:
+  ingressClassName: haproxy
+  tls:
+    - secretName: {{ $route.secret }}
+      hosts:
+        {{- range $route.hosts }}
+        - {{ required "public ingress host is required" . | quote }}
+        {{- end }}
+  rules:
+    {{- range $route.hosts }}
+    - host: {{ required "public ingress host is required" . | quote }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: stadtstack-site
+                port:
+                  number: 8080
+    {{- end }}
+{{- end }}

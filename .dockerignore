@@ -1,0 +1,16 @@
+**
+!Dockerfile
+!package.json
+!package-lock.json
+!next.config.ts
+!tsconfig.json
+!next-env.d.ts
+!postcss.config.mjs
+!app/
+!app/**
+!public/
+!public/**
+!scripts/
+!scripts/export-nginx.mjs
+!deploy/
+!deploy/nginx.conf

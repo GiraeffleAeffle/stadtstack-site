@@ -1,0 +1,9 @@
+hosts:
+  site:
+    - stadtstack.eu
+    - www.stadtstack.eu
+  roebel: roebel.stadtstack.eu
+image:
+  repository: ghcr.io/giraeffleaeffle/stadtstack-site
+  # Deliberately empty: paste the reviewed public image workflow digest before release.
+  digest: ""
