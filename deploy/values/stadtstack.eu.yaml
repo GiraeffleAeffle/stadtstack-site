@@ -5,5 +5,5 @@ hosts:
   roebel: roebel.stadtstack.eu
 image:
   repository: ghcr.io/giraeffleaeffle/stadtstack-site
-  # Deliberately empty: paste the reviewed public image workflow digest before release.
-  digest: ""
+  # From the image workflow run 36773795792 for tag image-20260930-c2aed8f (commit c2aed8f), pushed 30 Sep 2026.
+  digest: "sha256:3904a89aa9496eebe876896fe685c6ea431a6c603939b29097c473ffc1fccd26"
