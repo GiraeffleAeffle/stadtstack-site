@@ -4,24 +4,22 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://stadtstack.eu"),
   icons: { icon: "/favicon.svg" },
-  title: "Stadtstack · Eine Stadt, viermal gesehen",
+  title: "Stadtstack · Stadt gemeinsam ausprobieren",
   description:
-    "Derselbe Platz – gebaut, gemessen, beraten, verändert: ein interaktives Architekturmodell für Städte, die informiert handeln und voneinander lernen. Deutsch & English.",
+    "Ledger of Life, ZK Loyalty, Spiel, Beteiligung, Offline-Mesh und offene Stadtdaten: aktuelle Projekte, Pilotstatus und klare Grenzen.",
   openGraph: {
     url: "https://stadtstack.eu",
-    title: "Stadtstack · Eine Stadt, viermal gesehen",
+    title: "Stadtstack · Stadt gemeinsam ausprobieren",
     description:
-      "Infrastruktur, Wissen, Entscheidungen und Umsetzung – und wie Ergebnisse zurück ins Stadtwissen fließen.",
-    images: ["https://stadtstack.eu/stadtstack-overview.png"],
+      "Ein unabhängiges Stadtlabor für Wohnen, lokale Läden, Beteiligung und offene Daten. Kein offizieller Stadtdienst.",
     locale: "de_DE",
     type: "website",
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Stadtstack · One city, seen four ways",
+    card: "summary",
+    title: "Stadtstack · Stadt gemeinsam ausprobieren",
     description:
-      "The same square – built, measured, discussed, changed. An interactive architecture model for cities that learn.",
-    images: ["https://stadtstack.eu/stadtstack-overview.png"],
+      "Aktuelle Projekte und ihre Grenzen: Testnetze, beratende Beteiligung und ein Offline-Mesh im Labor.",
   },
 };
 

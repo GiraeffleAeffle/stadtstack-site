@@ -1,19 +1,18 @@
-# Stadtstack · One city, seen four ways
+# Stadtstack · Stadt gemeinsam ausprobieren
 
-An interactive, bilingual architecture model for cities that share infrastructure, make informed decisions, and learn from outcomes.
+A mobile-first overview of the owner's current city projects, with explicit pilot status, test-network boundaries and public links. Updated 10 October 2026.
 
 Live at https://stadtstack.eu since 30 September 2026, on the owner's Talos cluster (Helm release `stadtstack-site`). `www.stadtstack.eu` redirects to the apex and `roebel.stadtstack.eu` to the Röbel pilot apps.
 
 ## Explore
 
-- **The same square on four levels.** One city block is shown four times, as a stacked, exploded model: built (infrastructure), measured and understood (knowledge), discussed and decided (decisions), and changed (delivery). A plumb line marks the same square on every level.
-- **Follow a relationship.** Select a level or any object in the model. Ink threads with verbs – powers, observes, explains, decides, delivers, evaluates, shares – show what it depends on and what it informs. The card names who is responsible and how rights apply.
-- **Follow a story.** Heat protection, emergency preparedness, and housing move step by step through the scene. Measurements and scenarios are labeled differently, decisions stay with people, and outcomes flow back into the city's knowledge.
-- **Across all levels.** Rights & trust frame the whole stack; a comparable city and the regional, national, and EU level connect laterally and upward, without becoming extra levels.
-- **Look closer** opens the stack at one level; **Whole city** returns to the overview. Arrow keys rotate the model; Escape steps back.
-- The original 17 topics remain available in contextual model details and the design notes.
+- Ledger of Life: housing/deposits on Solana, Have your say, cross-city topics, sourced city AI, loyalty map and offline Home Node.
+- ZK Loyalty: local-shop pilot on Sepolia.
+- The game, and the unchanged closed participation site.
+- Ledger Lite / Gnosis mesh: a one-radio-hop LoRa/Reticulum lab demo, not a citywide payment network.
+- Civic data pipeline; hosted MCP is marked coming soon until independently verified live.
 
-The website is an architecture model. Displayed data, scenarios, and connections are illustrative; it does not connect to live municipal services or implement the proposed city game, S2Vec pipeline, or regulatory processes.
+All blockchain units are test units without monetary value or rights. Participation is advisory. This is not an official municipal service.
 
 ## Develop
 
@@ -29,13 +28,15 @@ npm run build
 
 | File | Responsibility |
 | --- | --- |
+| `app/page.tsx` | Current project overview and public links |
+| `app/projects.css` | Mobile-first project cards in the existing Stadtstack typography and palette |
 | `app/stadtstack-content.ts` | German and English content: levels, entities and their kinds, relations with verbs, cross-cutting connections, stories with scene cues, and the 17-topic mapping |
 | `app/stadtstack-models.ts` | Procedural city: the shared site plan in four lenses, the comparable city, higher institutions, dimming, and story cues |
 | `app/stadtstack-scene.tsx` | Three.js renderer, camera framing, SVG relationship ink, anchored labels, picking, keyboard rotation, and lifecycle |
-| `app/stadtstack-experience.tsx` | Page, selection and story state, field card, legend and bilingual Stadtstack family |
+| `app/stadtstack-experience.tsx` | Earlier illustrative architecture model, retained as source/design reference, not mounted on the homepage |
 | `app/globals.css` | Visual system and responsive layout |
 
-Fonts are self-hosted in `public/fonts` (SIL Open Font License), so visitors' browsers do not contact third-party font servers. The scene renders only while something moves, pauses outside the viewport, respects reduced motion, and shows `public/stadtstack-overview.png` with the same native controls if WebGL is unavailable.
+Fonts are self-hosted in `public/fonts` (SIL Open Font License), so visitors' browsers do not contact third-party font servers. The current homepage does not load the earlier Three.js scene.
 
 See [the design rationale](docs/overview-proposal.md) for the 17-to-4 mapping and the source for the proposed role of S2Vec. The earlier illustration and its prompt are stored in `docs/concepts/`.
 
