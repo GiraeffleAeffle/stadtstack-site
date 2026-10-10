@@ -182,13 +182,21 @@ def manifests(sources):
         "podSelector": {"matchLabels": {"acme.cert-manager.io/http01-solver": "true"}},
         "policyTypes": ["Ingress"], "ingress": [{"from": [{"ipBlock": {"cidr": source}} for source in sources],
                                                   "ports": [{"port": 8089, "protocol": "TCP"}]}]})
-    certificate = {"apiVersion": "cert-manager.io/v1", "kind": "Certificate",
-                   "metadata": {"name": CERTIFICATE, "namespace": NAMESPACE},
-                   "spec": {"secretName": CERTIFICATE, "dnsNames": [HOST],
-                            "issuerRef": {"name": ISSUER, "kind": "ClusterIssuer", "group": "cert-manager.io"},
-                            "usages": ["digital signature", "key encipherment"],
-                            "privateKey": {"rotationPolicy": "Always"}}}
-    return [deny, solver, certificate]
+    def certificate(name, host):
+        return {"apiVersion": "cert-manager.io/v1", "kind": "Certificate",
+                "metadata": {"name": name, "namespace": NAMESPACE},
+                "spec": {"secretName": name, "dnsNames": [host],
+                         "issuerRef": {"name": ISSUER, "kind": "ClusterIssuer", "group": "cert-manager.io"},
+                         "usages": ["digital signature", "key encipherment"],
+                         "privateKey": {"rotationPolicy": "Always"}}}
+    return [deny, solver, certificate(CERTIFICATE, HOST), certificate("stadtstack-contact-tls", "stadtstack.eu")]
+
+
+def approved_object(actual, expected):
+    require(actual.get("apiVersion") == expected["apiVersion"] and actual.get("kind") == expected["kind"] and
+            actual.get("spec") == expected["spec"] and
+            all(actual.get("metadata", {}).get(key) == value for key, value in expected["metadata"].items()),
+            "Admitted/readback object differs from approved spec/ownership; stop without further writes.")
 
 
 class Provider:
@@ -430,34 +438,60 @@ def main():
                             "Existing policy is not owned by this contact chart; no silent ownership adoption.")
             if missing:
                 require(args.tls, "Required namespace-local TLS policy/certificate is missing; --check never creates resources.")
-                if any(item["kind"] == "Certificate" for item in missing):
-                    existing_secret = kc("get", "secret", CERTIFICATE, "-n", NAMESPACE, "--ignore-not-found", "-o", "name")
-                    require(not existing_secret.strip(),
-                            "TLS Secret exists without this Certificate; no implicit cert-manager overwrite/adoption is authorized.")
-                preview = json.dumps({"apiVersion": "v1", "kind": "List", "items": missing}).encode()
-                # Client-side dry-run only; server-side dry-run is an admission write.
-                kc("create", "--dry-run=client", "-f", "-", "-o", "json", data=preview)
+                for item in missing:
+                    if item["kind"] == "Certificate":
+                        existing_secret = kc("get", "secret", item["spec"]["secretName"], "-n", NAMESPACE,
+                                             "--ignore-not-found", "-o", "name")
+                        require(not existing_secret.strip(),
+                                "TLS Secret exists without approved Certificate; no implicit overwrite/adoption authorized.")
+                admitted = []
+                for item in missing:
+                    planned = json.loads(kc("create", "--dry-run=server", "-f", "-", "-o", "json",
+                                            data=json.dumps(item).encode()))
+                    approved_object(planned, item)
+                    admitted.append((item, planned))
+                print(json.dumps({"serverAdmissionPlans": [
+                    {"kind": item["kind"], "name": item["metadata"]["name"], "before": None,
+                     "approvedSpec": item["spec"], "admittedSpec": plan["spec"],
+                     "planSHA256": fingerprint({"spec": plan["spec"], "ownership": item["metadata"]})}
+                    for item, plan in admitted]}, indent=2), flush=True)
                 confirm(f"create TLS {HOST} {NAMESPACE} {args.context} owner {dns['domainOwner']}")
                 fresh, _ = provider.snapshot()
                 require(desired(a_record(fresh), dns), "DNS changed before TLS issuance; no write authorized.")
-                # Ordered individual create never overwrites a resource that raced us.
-                for item in missing:
-                    kc("create", "-f", "-", data=json.dumps(item).encode())
+                # Ordered create refuses races; compare UID and admitted spec after real admission.
+                for item, planned in admitted:
+                    created = json.loads(kc("create", "-f", "-", "-o", "json", data=json.dumps(item).encode()))
+                    approved_object(created, item)
+                    require(created["spec"] == planned["spec"] and created["metadata"].get("uid"),
+                            "Actual admission differs from server preview or lacks UID.")
+                    observed = get(item["kind"], item["metadata"]["name"], "-n", NAMESPACE)
+                    approved_object(observed, item)
+                    require(observed["metadata"]["uid"] == created["metadata"]["uid"],
+                            "Resource replaced before post-create readback; stop without further writes.")
             if args.tls:
-                kc("wait", "-n", NAMESPACE, "--for=condition=Ready", "certificate/" + CERTIFICATE, "--timeout=300s")
-        cert = get("certificate", CERTIFICATE, "-n", NAMESPACE)
-        require(cert["spec"]["secretName"] == CERTIFICATE and cert["spec"]["dnsNames"] == [HOST] and
-                cert["spec"]["issuerRef"] == objects[-1]["spec"]["issuerRef"] and
-                any(condition.get("type") == "Ready" and condition.get("status") == "True" and
-                    condition.get("observedGeneration") == cert["metadata"]["generation"]
-                    for condition in cert.get("status", {}).get("conditions", [])), "Namespace-local Certificate is not currently Ready for approved host/issuer.")
-        # Return only public leaf material + boolean key presence, never tls.key.
-        public = kc("get", "secret", CERTIFICATE, "-n", NAMESPACE, "-o",
-                    'go-template={{if eq .type "kubernetes.io/tls"}}{{if index .data "tls.key"}}{{index .data "tls.crt"}}{{end}}{{end}}')
-        require(public.strip(), "Namespace-local TLS certificate or private-key presence is absent.")
-        leaf = base64.b64decode(public, validate=True)
-        validity = run(["openssl", "x509", "-noout", "-checkend", "86400", "-checkhost", HOST], data=leaf)
-        require(("Hostname " + HOST + " does match certificate").encode() in validity, "TLS leaf does not cover the approved host.")
+                for item in objects:
+                    if item["kind"] == "Certificate":
+                        kc("wait", "-n", NAMESPACE, "--for=condition=Ready",
+                           "certificate/" + item["metadata"]["name"], "--timeout=300s")
+        for item in objects:
+            if item["kind"] != "Certificate":
+                continue
+            certificate_name = item["metadata"]["name"]
+            host = item["spec"]["dnsNames"][0]
+            cert = get("certificate", certificate_name, "-n", NAMESPACE)
+            approved_object(cert, item)
+            require(any(condition.get("type") == "Ready" and condition.get("status") == "True" and
+                        condition.get("observedGeneration") == cert["metadata"]["generation"]
+                        for condition in cert.get("status", {}).get("conditions", [])),
+                    "Namespace-local Certificate is not current Ready for approved host/issuer.")
+            # Only public leaf and boolean key presence leave kubectl, never tls.key.
+            public = kc("get", "secret", certificate_name, "-n", NAMESPACE, "-o",
+                        'go-template={{if eq .type "kubernetes.io/tls"}}{{if index .data "tls.key"}}{{index .data "tls.crt"}}{{end}}{{end}}')
+            require(public.strip(), "Namespace-local TLS certificate/private-key presence is absent.")
+            leaf = base64.b64decode(public, validate=True)
+            validity = run(["openssl", "x509", "-noout", "-checkend", "86400", "-checkhost", host], data=leaf)
+            require(("Hostname " + host + " does match certificate").encode() in validity,
+                    "TLS leaf does not cover the approved host.")
         if args.check:
             ingress = get("ingress", "stadtstack-contact-ntfy", "-n", NAMESPACE)
             expected_rules = [{"host": HOST, "http": {"paths": [{"path": "/", "pathType": "Prefix",

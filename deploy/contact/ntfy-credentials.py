@@ -28,6 +28,7 @@ https://github.com/binwiederhier/ntfy/blob/v2.29.0/user/util.go
 """
 import argparse
 import base64
+import hmac
 import json
 import os
 from pathlib import Path
@@ -90,11 +91,16 @@ def secret_fields(owner, publisher):
             "NTFY_AUTH_TOKENS": f'owner:{owner["token"]}:owner,contact:{publisher["token"]}:contact'}
 
 
-def inbox_patch(resource_version, token):
-    # A resourceVersion test prevents a concurrent edit; this changes only one key.
+def inbox_patch(resource_version, token, existing_token=""):
+    # ResourceVersion guards races; a known equal token is a no-op, never rotation.
     require(isinstance(resource_version, str) and resource_version, "Inbox Secret resourceVersion is absent.")
+    require(isinstance(existing_token, str), "Existing publisher token must be protected encoded data.")
+    encoded = base64.b64encode(token.encode()).decode()
+    if existing_token:
+        require(hmac.compare_digest(existing_token, encoded), "Existing inbox publisher token differs from custody; refusing replacement.")
+        return []
     return [{"op": "test", "path": "/metadata/resourceVersion", "value": resource_version},
-            {"op": "add", "path": "/data/NTFY_TOKEN", "value": base64.b64encode(token.encode()).decode()}]
+            {"op": "add", "path": "/data/NTFY_TOKEN", "value": encoded}]
 
 
 def private_capture(command):
@@ -127,6 +133,13 @@ def bootstrap(kc, owns_lock, keychain, bcrypt, context):
         publisher = new_credential(bcrypt, owner=False)
         owns_lock()
         keychain.create(PUBLISHER_SERVICE, "contact", publisher)
+    protected_publisher = kc("-n", release.NAMESPACE, "get", "secret", release.SECRET, "-o",
+                             'go-template={{printf "%s\\n" .metadata.resourceVersion}}{{with index .data "NTFY_TOKEN"}}{{.}}{{end}}',
+                             capture=True).decode()
+    publisher_state = protected_publisher.split("\n")
+    require(len(publisher_state) == 2 and publisher_state[0] == readiness.strip(),
+            "Inbox Secret changed during credential review; no further write authorized.")
+    publisher_patch = inbox_patch(publisher_state[0], publisher["token"], publisher_state[1])
     fields = secret_fields(owner, publisher)
     if existing:
         require(existing.get("type") == "Opaque" and existing.get("data") ==
@@ -136,9 +149,10 @@ def bootstrap(kc, owns_lock, keychain, bcrypt, context):
         manifest = {"apiVersion": "v1", "kind": "Secret", "type": "Opaque",
                     "metadata": {"name": NTFY_SECRET, "namespace": release.NAMESPACE}, "stringData": fields}
         kc("create", "-f", "-", data=json.dumps(manifest).encode(), private=True)
-    # Optimistic JSON patch preserves all other keys/metadata; no Secret replacement.
-    kc("-n", release.NAMESPACE, "patch", "secret", release.SECRET, "--type=json", "--patch-file=/dev/stdin",
-       data=json.dumps(inbox_patch(readiness.strip(), publisher["token"])).encode(), private=True)
+    # Add only an absent token. An equal token is a no-op; divergent tokens refused above.
+    if publisher_patch:
+        kc("-n", release.NAMESPACE, "patch", "secret", release.SECRET, "--type=json", "--patch-file=/dev/stdin",
+           data=json.dumps(publisher_patch).encode(), private=True)
     print("ntfy credentials provisioned without credential output; inbox encryption/admin keys unchanged.")
     print("Owner setup: Keychain Access GUI, org.stadtstack.ntfy.owner / owner; server https://ntfy.stadtstack.eu, topic contact.")
     print("No rollout, DNS/TLS mutation, subscription, publication or live ntfy test was performed.")

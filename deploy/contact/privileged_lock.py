@@ -7,9 +7,10 @@ import stat
 
 
 class PrivilegedLock:
-    def __init__(self, path):
+    def __init__(self, path, *, runner=False):
         self.path = Path(path)
         self.delegated = False
+        self.runner = runner
         self.identity = None
         self.owner = None
 
@@ -17,6 +18,10 @@ class PrivilegedLock:
         if not self.path.parent.is_dir() or self.path.is_symlink():
             raise ValueError("Shared lock parent missing or lock symlink; no session opened.")
         delegated = os.environ.get("STADTSTACK_PRIVILEGED_LOCK_OWNER")
+        if delegated is None and not self.runner:
+            raise ValueError("Live helpers require the approved governed runner's exact delegated lock.")
+        if delegated is not None and self.runner:
+            raise ValueError("Session runner must acquire its own lock, not delegated ownership.")
         if delegated is not None:
             if re.fullmatch(r"[A-Za-z0-9._-]{16,128}", delegated) is None:
                 raise ValueError("Invalid delegated runner identity.")

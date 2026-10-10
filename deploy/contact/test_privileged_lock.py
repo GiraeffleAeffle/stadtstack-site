@@ -16,12 +16,18 @@ class PrivilegedLockTests(unittest.TestCase):
 
     def test_standalone_acquires_and_releases_only_its_directory(self):
         with patch.dict(os.environ, {}, clear=True):
-            lock = PrivilegedLock(self.path)
+            lock = PrivilegedLock(self.path, runner=True)
             lock.acquire()
             lock.check()
             self.assertTrue((self.path / "owner").is_file())
             lock.release()
             self.assertFalse(self.path.exists())
+
+    def test_helper_without_runner_never_creates_lock(self):
+        with patch.dict(os.environ, {}, clear=True):
+            with self.assertRaises(ValueError):
+                PrivilegedLock(self.path).acquire()
+        self.assertFalse(self.path.exists())
 
     def prepare_runner(self):
         owner = "contact-runner-" + "a" * 32
@@ -49,12 +55,12 @@ class PrivilegedLockTests(unittest.TestCase):
     def test_existing_without_delegation_refuses(self):
         self.prepare_runner()
         with patch.dict(os.environ, {}, clear=True):
-            with self.assertRaises(FileExistsError):
+            with self.assertRaises(ValueError):
                 PrivilegedLock(self.path).acquire()
 
     def test_changed_owner_refuses_operation_and_cleanup(self):
         with patch.dict(os.environ, {}, clear=True):
-            lock = PrivilegedLock(self.path)
+            lock = PrivilegedLock(self.path, runner=True)
             lock.acquire()
             (self.path / "owner").write_text("someone-else\n")
             with self.assertRaises(ValueError):

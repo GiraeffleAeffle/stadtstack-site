@@ -106,6 +106,14 @@ class CredentialTests(unittest.TestCase):
         with self.assertRaises(credentials.release.Refusal):
             credentials.inbox_patch("", self.publisher["token"])
 
+    def test_publisher_existing_equal_is_noop(self):
+        encoded = base64.b64encode(self.publisher["token"].encode()).decode()
+        self.assertEqual(credentials.inbox_patch("42", self.publisher["token"], encoded), [])
+
+    def test_publisher_existing_different_refuses(self):
+        with self.assertRaises(credentials.release.Refusal):
+            credentials.inbox_patch("42", self.publisher["token"], base64.b64encode(b"unknown-token").decode())
+
     def test_corrupt_custody_is_refused(self):
         for field, value in (("token", "tk_" + "a" * 64), ("hash", "$2b$12$fake"),
                              ("password", "mismatched-password"), ("endpoint", "https://ntfy.sh"),
@@ -114,11 +122,13 @@ class CredentialTests(unittest.TestCase):
                 with self.assertRaises(credentials.release.Refusal):
                     credentials.validate_credential({**self.owner, field: value}, bcrypt, owner=True)
 
-    def cluster(self, *, existing=None, ready=b"42"):
+    def cluster(self, *, existing=None, ready=b"42", publisher_token=""):
         writes = []
 
         def kc(*arguments, capture=False, **kwargs):
             if capture:
+                if credentials.release.SECRET in arguments:
+                    return ready + b"\n" + publisher_token.encode()
                 return json.dumps(existing).encode() if existing is not None else b""
             if "get" in arguments:
                 return 0, ready
@@ -179,13 +189,21 @@ class CredentialTests(unittest.TestCase):
             self.assertNotIn(secret, output.getvalue())
 
     def test_exact_existing_custody_resumes_without_rotation(self):
-        kc, writes = self.cluster(existing=self.auth_secret())
+        kc, writes = self.cluster(existing=self.auth_secret(), publisher_token=base64.b64encode(self.publisher["token"].encode()).decode())
         keychain = self.custody(owner=self.owner, publisher=self.publisher)
         with patch.object(credentials.release, "confirm"), redirect_stdout(io.StringIO()):
             credentials.bootstrap(kc, Mock(), keychain, bcrypt, "approved-context")
         keychain.create.assert_not_called()
-        self.assertEqual(len(writes), 1)
-        self.assertIn("patch", writes[0][0])
+        self.assertEqual(writes, [])
+
+    def test_unknown_existing_publisher_token_refuses_without_cluster_writes(self):
+        kc, writes = self.cluster(existing=self.auth_secret(), publisher_token=base64.b64encode(b"unknown-token").decode())
+        keychain = self.custody(owner=self.owner, publisher=self.publisher)
+        with patch.object(credentials.release, "confirm"):
+            with self.assertRaises(credentials.release.Refusal):
+                credentials.bootstrap(kc, Mock(), keychain, bcrypt, "approved-context")
+        keychain.create.assert_not_called()
+        self.assertEqual(writes, [])
 
     def test_existing_secret_without_custody_is_never_replaced(self):
         kc, writes = self.cluster(existing=self.auth_secret())
