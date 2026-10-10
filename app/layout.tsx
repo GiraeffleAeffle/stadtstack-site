@@ -3,7 +3,13 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://stadtstack.eu"),
-  icons: { icon: "/favicon.svg" },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "16x16 32x32 48x48", type: "image/x-icon" },
+      { url: "/icon.svg", sizes: "any", type: "image/svg+xml" },
+    ],
+    apple: { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+  },
   title: "Stadtstack · Eine Stadt, viermal gesehen",
   description:
     "Derselbe Platz – gebaut, gemessen, beraten, verändert: ein interaktives Architekturmodell für Städte, die informiert handeln und voneinander lernen. Deutsch & English.",
