@@ -56,6 +56,14 @@ def run(command, *, data=None, accepted=(0,), private=False, cwd=None):
     return result.returncode, result.stdout or b""
 
 
+def verify_tls_leaf(certificate, host):
+    # OpenSSL -checkend short-circuits -checkhost; each must run independently.
+    run(["openssl", "x509", "-noout", "-checkend", "86400"], data=certificate)
+    _, hostname = run(["openssl", "x509", "-noout", "-checkhost", host], data=certificate)
+    require(("Hostname " + host + " does match certificate").encode() in hostname,
+            "Namespace TLS certificate does not cover " + host)
+
+
 def text(command, **kwargs):
     return run(command, **kwargs)[1].decode().strip()
 
@@ -336,9 +344,7 @@ def main():
                      'go-template={{if eq .type "kubernetes.io/tls"}}{{if index .data "tls.key"}}{{index .data "tls.crt"}}{{end}}{{end}}')[1]
             require(tls.strip(), "Approved namespace-local TLS Secret/certificate/key is missing: " + secret_name)
             certificate = base64.b64decode(tls)
-            _, validity = run(["openssl", "x509", "-noout", "-checkend", "86400", "-checkhost", host], data=certificate)
-            require(("Hostname " + host + " does match certificate").encode() in validity,
-                    "Namespace TLS certificate does not cover " + host)
+            verify_tls_leaf(certificate, host)
         require(kc("get", "ingressclass", "haproxy", "-o", "jsonpath={.spec.controller}")[1].strip(),
                 "Reviewed HAProxy ingress class is absent.")
         require("diff" in text(["helm", "plugin", "list"]).split(), "Helm diff plugin is required for deployment.")

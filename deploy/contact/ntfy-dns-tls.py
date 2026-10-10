@@ -55,6 +55,7 @@ import time
 import urllib.error
 import urllib.request
 from privileged_lock import PrivilegedLock
+import release
 
 HOST = "ntfy.stadtstack.eu"
 ZONE = "stadtstack.eu"
@@ -489,9 +490,10 @@ def main():
                         'go-template={{if eq .type "kubernetes.io/tls"}}{{if index .data "tls.key"}}{{index .data "tls.crt"}}{{end}}{{end}}')
             require(public.strip(), "Namespace-local TLS certificate/private-key presence is absent.")
             leaf = base64.b64decode(public, validate=True)
-            validity = run(["openssl", "x509", "-noout", "-checkend", "86400", "-checkhost", host], data=leaf)
-            require(("Hostname " + host + " does match certificate").encode() in validity,
-                    "TLS leaf does not cover the approved host.")
+            try:
+                release.verify_tls_leaf(leaf, host)
+            except release.Refusal as error:
+                raise Refusal(str(error)) from None
         if args.check:
             ingress = get("ingress", "stadtstack-contact-ntfy", "-n", NAMESPACE)
             expected_rules = [{"host": HOST, "http": {"paths": [{"path": "/", "pathType": "Prefix",
