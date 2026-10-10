@@ -49,3 +49,6 @@ deadline, with the 30-day in-app warning/export window before that deadline.
 Discussion cleanup removes identifying links and prose, preserving only
 non-identifying evidence; 12-month financial cleanup applies only to proven
 closed test flows, never unresolved payment or recovery states.
+The notice distinguishes content-free restore markers retained up to 90 days
+from purpose-limited minimal pseudonymous runtime guards; it does not claim
+that restore/guard automation has already been verified live.
