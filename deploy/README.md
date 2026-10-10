@@ -43,3 +43,9 @@ shared legal footer to the existing interactive homepage. The contact form
 posts JSON to the same-origin `/api/contact`; its separately managed contact
 service must be live before the form is published. The site image remains a
 static export and does not implement the contact API.
+
+The approved retention notice sets an overall 24-month inactive-account
+deadline, with the 30-day in-app warning/export window before that deadline.
+Discussion cleanup removes identifying links and prose, preserving only
+non-identifying evidence; 12-month financial cleanup applies only to proven
+closed test flows, never unresolved payment or recovery states.
