@@ -5,5 +5,5 @@ hosts:
   roebel: roebel.stadtstack.eu
 image:
   repository: ghcr.io/giraeffleaeffle/stadtstack-site
-  # Approved legal pages: workflow 38067402745, tag image-20261010-legal, source 4398d52.
-  digest: "sha256:5a9535f5dfdbe084333cbcb1b7ecb560defe73757210614f36743a9a5a12e385"
+  # Final legal retention: workflow 38068135378, tag image-20261010-legal-retention, source 071061b.
+  digest: "sha256:b5fe65aef706b7187073152c7308edb2751d5c92590504fce24bf062867d546e"
