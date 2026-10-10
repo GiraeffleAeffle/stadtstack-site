@@ -170,10 +170,10 @@ def public_image(args):
 
 def confirm(phrase):
     try:
-        with open("/dev/tty", "r+") as tty:
-            tty.write('Type exactly "' + phrase + '" to authorize this write: ')
-            tty.flush()
-            answer = tty.readline().rstrip("\n")
+        with open("/dev/tty", "r") as reader, open("/dev/tty", "w") as writer:
+            writer.write('Type exactly "' + phrase + '" to authorize this write: ')
+            writer.flush()
+            answer = reader.readline().rstrip("\n")
     except OSError as error:
         raise Refusal("Owner confirmation requires a controlling terminal.") from error
     require(answer == phrase, "Owner confirmation did not match; no write authorized.")

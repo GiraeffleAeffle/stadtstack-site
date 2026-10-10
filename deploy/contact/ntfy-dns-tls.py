@@ -93,10 +93,10 @@ def run(command, data=None, accepted=(0,)):
 
 def confirm(phrase):
     try:
-        with open("/dev/tty", "r+") as tty:
-            tty.write("Exact owner confirmation required: " + phrase + "\n> ")
-            tty.flush()
-            answer = tty.readline().strip()
+        with open("/dev/tty", "r") as reader, open("/dev/tty", "w") as writer:
+            writer.write("Exact owner confirmation required: " + phrase + "\n> ")
+            writer.flush()
+            answer = reader.readline().strip()
     except OSError as error:
         raise Refusal("An owner-controlled terminal is required; no write authorized.") from error
     require(answer == phrase, "Owner confirmation did not match; no write authorized.")
