@@ -10,7 +10,7 @@ Live at https://stadtstack.eu since 30 September 2026, on the owner's Talos clus
 - ZK Loyalty: local-shop pilot on Sepolia.
 - The game, and the unchanged closed participation site.
 - Ledger Lite / Gnosis mesh: a one-radio-hop LoRa/Reticulum lab demo, not a citywide payment network.
-- Civic data pipeline; hosted MCP is marked coming soon until independently verified live.
+- Civic data pipeline and verified hosted MCP at `https://mcp.stadtstack.eu/mcp`: protected personal-token, read-only access, not native OAuth or a ready-made ChatGPT connector. The card links the public health endpoint.
 
 All blockchain units are test units without monetary value or rights. Participation is advisory. This is not an official municipal service.
 
