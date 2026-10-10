@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: stadtstack-contact
+  annotations:
+    haproxy-ingress.github.io/ssl-redirect: "true"
+spec:
+  ingressClassName: haproxy
+  tls:
+    - secretName: stadtstack-contact-tls
+      hosts: [stadtstack.eu]
+  rules:
+    - host: stadtstack.eu
+      http:
+        paths:
+          - path: /api/contact
+            pathType: Exact
+            backend:
+              service:
+                name: stadtstack-contact
+                port: { number: 8081 }

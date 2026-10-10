@@ -1,0 +1,35 @@
+image:
+  repository: ""
+  digest: ""
+secretName: stadtstack-contact-inbox
+storage:
+  size: 1Gi
+  # Owner-approved dynamically provisioned class; no implicit default selection.
+  storageClassName: hcloud-volumes
+maxMessages: 1000
+ntfy:
+  storageSize: 1Gi
+  image:
+    repository: docker.io/binwiederhier/ntfy
+    # Official v2.29.0 multi-arch index; still requires owner release review.
+    digest: sha256:4c599cf0818965782f93f652bd843e92714992e84d6b88ad17713dc0951cda1f
+  resources:
+    requests: { cpu: 10m, memory: 32Mi }
+    limits: { cpu: 100m, memory: 128Mi }
+ingress:
+  # Exact existing production HAProxy/Flannel peer set, owner approved.
+  haproxySources:
+    - 10.42.0.10/32
+    - 10.42.0.11/32
+    - 10.42.0.12/32
+    - 10.244.0.0/32
+    - 10.244.0.1/32
+    - 10.244.1.0/32
+    - 10.244.1.1/32
+    - 10.244.2.0/32
+    - 10.244.2.1/32
+  # Exact socket-peer IPs, only after trusted header overwrite is verified.
+  trustedProxyIPs: []
+resources:
+  requests: { cpu: 25m, memory: 64Mi }
+  limits: { cpu: 200m, memory: 128Mi }

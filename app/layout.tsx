@@ -42,7 +42,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           crossOrigin="anonymous"
         />
       </head>
-      <body>{children}</body>
+      <body>{children}<footer style={{ padding: "24px", display: "flex", flexWrap: "wrap", gap: "20px", borderTop: "1px solid var(--line)" }} aria-label="Rechtliche Informationen / Legal information"><a href="/kontakt">Kontakt / Contact</a><a href="/impressum">Impressum / Legal notice</a><a href="/datenschutz">Datenschutz / Privacy</a></footer></body>
     </html>
   );
 }
