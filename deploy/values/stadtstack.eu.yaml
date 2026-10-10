@@ -5,5 +5,5 @@ hosts:
   roebel: roebel.stadtstack.eu
 image:
   repository: ghcr.io/giraeffleaeffle/stadtstack-site
-  # Owner-approved unified family: workflow 38047284919, tag image-20261010-unified-family, source bf645a8.
-  digest: "sha256:b44d9372d7d38d63bd4aad4ab42903771a5ff55c46cbb6263eb5a875b39fee97"
+  # Additive master-mark icons: workflow 38052491946, tag image-20261010-stadtstack-favicons, source 2625b29.
+  digest: "sha256:2229230098d5b3cdd5de1aef1e2b8a1e27a8af4f5ca23644f58f232343e1a5fc"
