@@ -1,6 +1,6 @@
 # Stadtstack legal/contact publication — release evidence
 
-German primary plus English; internal drafting notes are not legal advice. Owner approved legal visuals, retention and publication. Central legal/contact pages and encrypted contact+ntfy runtime are now live and accepted; current Ledger/spiel footer finishing and folded Ladenrunde next-release status are tracked separately. Each remaining governed release still requires its sole slot/shared lock. Original source trees were preserved through isolated worktrees.
+German primary plus English; internal notes are not legal advice. Owner-approved central legal/contact pages, encrypted contact+ntfy runtime, Ledger footer and spiel footer are now live and accepted. Ladenrunde's three-link footer is folded into its next combined current-source release under LoyaltyContractFix/Main; mitmachen waits for its release script. Ledger enforcement/consent WIP stays paused. Every later release requires its sole slot/shared lock. Original source trees were preserved.
 
 ## Owner contact and filled imprint
 
@@ -126,3 +126,15 @@ After site publication, **actual managed Chromium UI submission** on `/kontakt` 
 
 Stable evidence: `~/.cache/cluster-ops/contact-live-acceptance.json`, `contact-public-form-browser-evidence.json`, `contact-backend-live-checkpoint.json`. Completed20:38:35Z; session0/viewer+status+watch verified20:38:50Z/own lock released. Earlier unreleased/preparation/error notes remain historical. No iOS test was sent or claimed; owner phone setup/permission and separately approved device confirmation remain later gates. Broader Ledger enforcement remains paused/organisational policy as recorded separately; contact’s actual90day purge proof does not imply other services’ automation.
 
+
+## Final three-link footer acceptance
+
+Ledger corrective revision40: CityApp reports source649416b/pin50402d7, immutable imagee74a3a71…; authenticated390/1280 tests after actual wallet use and inserted Privy iframe pass. Links44px, no overflow; mobile footer bottom743.625 is above nav top778.953. Money regression0.001→0.001 finalized. Viewer restored/own shared lock released; owner-paused retention/consent WIP not included. Actual inspected screenshots: `/Users/max/Code/ledger-of-life-review/videos/captures-v4/live-footer-rev40-390.png` and `-1280.png` (CityApp inspection).
+
+Spiel revision14: source `b577a55c94e100fe451e57fa02c6bc1bdefdeb06`, release `4270993e6e494396b24259ad3401cd5e5436ce55`, image `sha256:c65cc82a07e4d162a80f628390143e38d97623271797cdac19d766aed6e067f0`, workflow38085171171. Contact/Impressum/Datenschutz links tested390/1280 with actual clicks; chooser, both game editions, mascot, world/portraits/icons preserved. Final actual evidence `/Users/max/.cache/cluster-ops/spiel-footer-evidence-20261010/live-acceptance.json` was written only after viewer/status/watchstream restoration and own lock release; source/digest/flags read independently.
+
+Independent public checks after this completed marker: `https://ledger.stadtstack.eu/` and `https://spiel.stadtstack.eu/` each200 with verified TLS and all three actual HTML anchors to central Kontakt/Impressum/Datenschutz. All three destinations fresh200/TLS. Earlier independent contact acceptance also verified ntfy root200/TLS.
+
+Ladenrunde handoff, not a separate LegalPages deployment: final combined source695e58a61d722f2b984a527e9b606f0c00a1e5eb, PRhttps://github.com/GiraeffleAeffle/zkLoyalty/pull/3, CI38085575818 green; Web48e1ea32…/Alto8ae66e0d… with all three DE/EN links,68tests/lint/types/build/exact-image/source-provenance reported PASS. Owner/Main folded this into LoyaltyContractFix's next release to rebuild once and preserve current safety/runtime changes. Actual source/digests/evidence: `/Users/max/.cache/cluster-ops/ladenrunde-legal-footer-handoff.json`. No claim its footer is already live. mitmachen's prepared footer still intentionally awaits its approved release script.
+
+Only the owner-confirmed iOS device test remains conditional: custom serverhttps://ntfy.stadtstack.eu, usernameowner, topiccontact, private Keychain GUI password retrieval; never print it. No standalone test publication/iOS test sent. After owner confirms app setup/subscription/permissions, Main authorizes exactly one generic publisher test.
