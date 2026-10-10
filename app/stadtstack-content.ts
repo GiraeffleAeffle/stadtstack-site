@@ -95,17 +95,6 @@ export const family = {
       href: "https://ledger.stadtstack.eu",
       linkLabel: c("Ledger of Life öffnen", "Open Ledger of Life"),
     },
-    {
-      id: "roebel",
-      title: c("Röbel · Pilot-Apps", "Röbel · pilot apps"),
-      badge: c("Pilot · Staging", "Pilot · Staging"),
-      description: c(
-        "Pilot-Apps für Röbel — kein offizieller Dienst der Stadt.",
-        "Pilot apps for Röbel — not an official town service.",
-      ),
-      href: "https://roebel.stadtstack.eu",
-      linkLabel: c("Pilot-Apps öffnen", "Open pilot apps"),
-    },
   ],
 };
 
