@@ -72,6 +72,10 @@ export const c = (de: string, en: string): Copy => ({ de, en });
 export const family = {
   title: c("Die Stadtstack-Familie", "The Stadtstack family"),
   nav: c("Familie", "Family"),
+  intro: c(
+    "Ein unabhängiges Stadtlabor, kein offizieller Stadtdienst. Blockchain-Funktionen nutzen Testnetze: Testeinheiten haben keinen Geldwert und begründen keine Rechte oder Ansprüche. Beteiligung ist beratend.",
+    "An independent city lab, not an official city service. Blockchain features use test networks: test units have no monetary value and confer no rights or entitlements. Participation is advisory.",
+  ),
   cards: [
     {
       id: "stadtstack",
@@ -94,6 +98,61 @@ export const family = {
       ),
       href: "https://ledger.stadtstack.eu",
       linkLabel: c("Ledger of Life öffnen", "Open Ledger of Life"),
+    },
+    {
+      id: "loyalty",
+      title: c("Ladenrunde", "Ladenrunde"),
+      badge: c("Pilot · Sepolia-Testnetz", "Pilot · Sepolia test network"),
+      description: c(
+        "Treue für lokale Läden – ein Pilot mit Zero-Knowledge-Technik, noch kein produktives Bonusprogramm. Die Erstellung und Veröffentlichung neuer Programme ist derzeit pausiert. Testeinheiten haben keinen Wert und begründen keine Ansprüche.",
+        "Loyalty for local shops – a pilot with zero-knowledge technology, not a production rewards programme. Creating and publishing new programmes is currently paused. Test units have no value and confer no rights.",
+      ),
+      href: "https://loyalty.stadtstack.eu",
+      linkLabel: c("Ladenrunde öffnen", "Open Ladenrunde"),
+    },
+    {
+      id: "game",
+      title: c("Spiel", "Game"),
+      badge: c("Spielbarer Prototyp", "Playable prototype"),
+      description: c(
+        "Stadt als Spiel: entdecken, ausprobieren und über das Zusammenleben ins Gespräch kommen. Ein eigener Zugang zu Stadtstack, ohne zuerst eine Blockchain verstehen zu müssen.",
+        "City as a game: explore, experiment and start a conversation about living together. Another way into Stadtstack, without needing to understand a blockchain first.",
+      ),
+      href: "https://spiel.stadtstack.eu",
+      linkLabel: c("Zum Spiel", "Play the game"),
+    },
+    {
+      id: "participation",
+      title: c("Mitmachen", "Participation"),
+      badge: c("Beteiligung geschlossen", "Participation closed"),
+      description: c(
+        "Die bisherige Beteiligungsseite bleibt unverändert erreichbar. Die Teilnahme ist geschlossen. Beteiligung ist beratend und ersetzt keine amtlichen Verfahren oder Entscheidungen.",
+        "The previous participation site remains accessible and unchanged. Participation is closed. Participation is advisory and does not replace official procedures or decisions.",
+      ),
+      href: "https://mitmachen.stadtstack.eu",
+      linkLabel: c("Bisherige Beteiligung ansehen", "View previous participation"),
+    },
+    {
+      id: "mesh",
+      title: c("Offline-Mesh", "Offline mesh"),
+      badge: c("Labor-Demo · ein Funk-Hop", "Lab demo · one radio hop"),
+      description: c(
+        "Ledger Lite und Zahlungen über LoRa/Reticulum auf Gnosis: kleine Nachrichten von Gerät zu Gerät, auch ohne Internet. Bisher ein Funk-Hop im Labor. Kein stadtweites Netz oder einsatzbereites Zahlungssystem; Testeinheiten haben keinen Wert oder Rechtsanspruch.",
+        "Ledger Lite and payments over LoRa/Reticulum on Gnosis: small messages between devices, even without internet. So far, one radio hop in the lab. Not a citywide network or production payment system; test units have no value or legal entitlement.",
+      ),
+      href: null,
+      linkLabel: c("Noch kein öffentlicher Zugang", "No public access yet"),
+    },
+    {
+      id: "mcp",
+      title: c("Civic Data & MCP", "Civic Data & MCP"),
+      badge: c("Gehosteter MCP · geschützter Lesezugang", "Hosted MCP · protected read access"),
+      description: c(
+        "Die Datenpipeline bereitet kommunale Quellen für nachvollziehbare Antworten auf. Der gehostete MCP macht sie für KI-Werkzeuge lesbar – mit Quellen, Datum und klaren Grenzen. Persönlicher Token am Endpunkt mcp.stadtstack.eu/mcp. Nur lesend; noch kein OAuth- oder fertiger ChatGPT-Connector. Der Link zeigt den öffentlichen Dienststatus.",
+        "The data pipeline prepares civic sources for traceable answers. The hosted MCP makes them readable by AI tools, with sources, dates and clear limits. Personal token at mcp.stadtstack.eu/mcp. Read-only; not yet OAuth or a ready-made ChatGPT connector. The link shows public service health.",
+      ),
+      href: "https://mcp.stadtstack.eu/health",
+      linkLabel: c("MCP-Dienststatus ansehen", "View MCP service health"),
     },
   ],
 };

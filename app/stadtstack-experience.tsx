@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import Image from "next/image";
 import StadtstackScene, { type Focus, type PickTarget, type StoryPosition } from "./stadtstack-scene";
-import StadtstackProjects from "./stadtstack-projects";
 import {
   connections,
   entities,
@@ -1006,6 +1005,7 @@ export default function StadtstackExperience() {
         <section id="family" className="family" aria-labelledby="family-title">
           <div className="section-head">
             <h2 id="family-title">{family.title[language]}</h2>
+            <p>{family.intro[language]}</p>
           </div>
           <ul className="family-grid">
             {family.cards.map((member) => (
@@ -1018,16 +1018,18 @@ export default function StadtstackExperience() {
                 </div>
                 <p className="family-badge">{member.badge[language]}</p>
                 <p className="family-description">{member.description[language]}</p>
-                <a className="family-link" href={member.href}>
-                  {member.linkLabel[language]}
-                  {member.id !== "stadtstack" && <Icon name="external" size={16} />}
-                </a>
+                {member.href ? (
+                  <a className="family-link" href={member.href}>
+                    {member.linkLabel[language]}
+                    {member.id !== "stadtstack" && <Icon name="external" size={16} />}
+                  </a>
+                ) : (
+                  <p className="family-badge">{member.linkLabel[language]}</p>
+                )}
               </li>
             ))}
           </ul>
         </section>
-
-        <StadtstackProjects language={language} />
 
       </main>
 
