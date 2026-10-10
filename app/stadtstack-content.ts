@@ -89,8 +89,8 @@ export const family = {
       title: c("Ledger of Life", "Ledger of Life"),
       badge: c("Testnetzwerke", "Test networks"),
       description: c(
-        "Finde ein Zuhause, sichere die Kaution, behalte dein Vermögen, gestalte deine Stadt mit — ein persönliches Ledger auf Testnetzwerken; Test-Token haben keinen Wert.",
-        "Find a home, secure the deposit, keep your assets, help build your city — a personal ledger on test networks; test tokens have no value",
+        "Wohnen, Mietkaution und beratende Beteiligung ausprobieren — ein persönliches Ledger auf Testnetzwerken; Test-Token haben keinen Wert und begründen keine Rechte oder Ansprüche.",
+        "Try housing, rental deposits and advisory participation — a personal ledger on test networks; test tokens have no value and confer no rights or entitlements.",
       ),
       href: "https://ledger.stadtstack.eu",
       linkLabel: c("Ledger of Life öffnen", "Open Ledger of Life"),

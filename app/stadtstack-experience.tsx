@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import Image from "next/image";
 import StadtstackScene, { type Focus, type PickTarget, type StoryPosition } from "./stadtstack-scene";
+import StadtstackProjects from "./stadtstack-projects";
 import {
   connections,
   entities,
@@ -1025,6 +1026,8 @@ export default function StadtstackExperience() {
             ))}
           </ul>
         </section>
+
+        <StadtstackProjects language={language} />
 
       </main>
 

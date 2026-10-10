@@ -12,6 +12,7 @@ Live at https://stadtstack.eu since 30 September 2026, on the owner's Talos clus
 - **Across all levels.** Rights & trust frame the whole stack; a comparable city and the regional, national, and EU level connect laterally and upward, without becoming extra levels.
 - **Look closer** opens the stack at one level; **Whole city** returns to the overview. Arrow keys rotate the model; Escape steps back.
 - The original 17 topics remain available in contextual model details and the design notes.
+- **Current projects.** An additional bilingual section after the original family cards lists Ledger of Life, ZK Loyalty, the game, closed participation, one-hop mesh lab and hosted protected civic MCP, with clear status and test-unit/advisory boundaries. Original logo, model, graphics, explanations, controls and styles remain intact. This additive proposal is not authorized for deployment until owner approval.
 
 The website is an architecture model. Displayed data, scenarios, and connections are illustrative; it does not connect to live municipal services or implement the proposed city game, S2Vec pipeline, or regulatory processes.
 
