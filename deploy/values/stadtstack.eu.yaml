@@ -5,5 +5,5 @@ hosts:
   roebel: roebel.stadtstack.eu
 image:
   repository: ghcr.io/giraeffleaeffle/stadtstack-site
-  # Image workflow 38040692526, tag image-20261010-projects-public, source commit 342e0fe.
-  digest: "sha256:b61c03d279026452c5e4d864d421ab77d2caecd6c08c35cd720f8202c1ccd032"
+  # Image workflow 38041861692, tag image-20261010-projects-mcp, source commit 79db0e8.
+  digest: "sha256:14c6bde563d461df7a4b7584b8013909c1133a8acdc7644b34bb563bb1a2bf8e"
