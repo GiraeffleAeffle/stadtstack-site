@@ -1014,6 +1014,12 @@ export default function StadtstackExperience() {
                   {member.id === "ledger" && (
                     <Image className="family-mark" src="/ledger-mark.svg" alt="" width={40} height={44} unoptimized />
                   )}
+                  {member.id === "loyalty" && (
+                    <Image className="family-mark" src="/ladenrunde-mark.svg" alt="" width={40} height={44} unoptimized />
+                  )}
+                  {member.id === "participation" && (
+                    <Image className="family-mark" src="/mitmachen-mark.svg" alt="" width={40} height={44} unoptimized />
+                  )}
                   <h3>{member.title[language]}</h3>
                 </div>
                 <p className="family-badge">{member.badge[language]}</p>
