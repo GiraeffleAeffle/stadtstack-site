@@ -35,3 +35,11 @@ NetworkPolicy denies all ingress and egress by default. Only the explicitly enum
 For an offline chart smoke, pass a dummy digest to `helm template stadtstack-site deploy/chart --namespace stadtstack-site --set image.digest=sha256:<64 lowercase hex characters>`. Never release that dummy image. Rendering with the committed empty digest must fail clearly.
 
 After an authorized release, check rollout, both certificate Ready conditions, public HTTPS, bundled font/model loading and the Roebel redirect. A successful script does not replace browser verification. Use Helm history and an explicitly reviewed `helm rollback stadtstack-site <revision> -n stadtstack-site` through the owner's bounded context for rollback; restore the corresponding digest in committed values before a subsequent release. Helm uninstall removes release resources, not the external namespace; DNS changes and namespace deletion are separate owner decisions.
+
+## Legal pages
+
+The legal release adds `/impressum`, `/datenschutz` and `/kontakt` plus the
+shared legal footer to the existing interactive homepage. The contact form
+posts JSON to the same-origin `/api/contact`; its separately managed contact
+service must be live before the form is published. The site image remains a
+static export and does not implement the contact API.
