@@ -5,5 +5,5 @@ hosts:
   roebel: roebel.stadtstack.eu
 image:
   repository: ghcr.io/giraeffleaeffle/stadtstack-site
-  # Additive master-mark icons: workflow 38052491946, tag image-20261010-stadtstack-favicons, source 2625b29.
-  digest: "sha256:2229230098d5b3cdd5de1aef1e2b8a1e27a8af4f5ca23644f58f232343e1a5fc"
+  # Approved legal pages: workflow 38067402745, tag image-20261010-legal, source 4398d52.
+  digest: "sha256:5a9535f5dfdbe084333cbcb1b7ecb560defe73757210614f36743a9a5a12e385"
