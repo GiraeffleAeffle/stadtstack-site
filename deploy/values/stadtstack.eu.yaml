@@ -5,5 +5,5 @@ hosts:
   roebel: roebel.stadtstack.eu
 image:
   repository: ghcr.io/giraeffleaeffle/stadtstack-site
-  # From the image workflow run 36839247566 for tag image-20261001-4f06080 (commit 4f06080), pushed 1 Oct 2026.
-  digest: "sha256:ea23e93b2bfa42605c66ae96a0e0b577388c44f80a85c2c019ec63e8e5e204b6"
+  # Owner-approved additive image: workflow 38045232600, tag image-20261010-additive-approved, source ab8e522.
+  digest: "sha256:37f0fe74629a588cb37551e098718378f9f773a05a25cbcbf1ae07dfbe35fbe5"
