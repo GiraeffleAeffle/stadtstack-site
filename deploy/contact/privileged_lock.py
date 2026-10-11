@@ -1,58 +1,36 @@
-"""Atomic cluster lock, with explicit owner-file-bound runner delegation."""
-import os
+"""Nested helper ownership checks; only session.py acquires/releases the Lease."""
+import importlib.util
 from pathlib import Path
-import re
-import secrets
-import stat
+
+def load_session():
+    spec = importlib.util.spec_from_file_location(
+        'stadtstack_session', '/Users/max/.cache/cluster-ops/governance/session.py')
+    session = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(session)
+    return session
 
 
 class PrivilegedLock:
     def __init__(self, path, *, runner=False):
+        self.session = load_session()
         self.path = Path(path)
-        self.delegated = False
-        self.runner = runner
-        self.identity = None
+        if self.path != self.session.MAC / 'privileged-session.lock':
+            raise self.session.Refused('Noncanonical helper lock')
         self.owner = None
+        self.directory = None
 
     def acquire(self):
-        if not self.path.parent.is_dir() or self.path.is_symlink():
-            raise ValueError("Shared lock parent missing or lock symlink; no session opened.")
-        delegated = os.environ.get("STADTSTACK_PRIVILEGED_LOCK_OWNER")
-        if delegated is None and not self.runner:
-            raise ValueError("Live helpers require the approved governed runner's exact delegated lock.")
-        if delegated is not None and self.runner:
-            raise ValueError("Session runner must acquire its own lock, not delegated ownership.")
-        if delegated is not None:
-            if re.fullmatch(r"[A-Za-z0-9._-]{16,128}", delegated) is None:
-                raise ValueError("Invalid delegated runner identity.")
-            self.owner = delegated
-            self.delegated = True
-        else:
-            self.path.mkdir(mode=0o700)  # Existing directory always refuses.
-            self.owner = "contact-" + secrets.token_hex(24)
-            try:
-                fd = os.open(self.path / "owner", os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
-                with os.fdopen(fd, "w") as handle:
-                    handle.write(self.owner + "\n")
-            except BaseException:
-                self.path.rmdir()
-                raise
-        self.identity = (self.path.stat().st_dev, self.path.stat().st_ino)
+        self.owner = self.session.assert_delegated()
+        self.directory = self.session.Directory(self.path, self.owner)
+        info = self.path.lstat()
+        self.directory.identity = (info.st_dev, info.st_ino)
         self.check()
 
     def check(self):
-        directory = self.path.lstat()
-        owner_path = self.path / "owner"
-        owner_stat = owner_path.lstat()
-        if (not stat.S_ISDIR(directory.st_mode) or directory.st_uid != os.getuid() or
-                directory.st_mode & 0o077 or (directory.st_dev, directory.st_ino) != self.identity or
-                not stat.S_ISREG(owner_stat.st_mode) or owner_stat.st_uid != os.getuid() or owner_stat.st_mode & 0o077 or
-                owner_path.read_text() != self.owner + "\n"):
-            raise ValueError("Shared lock ownership changed; no further operation authorized.")
+        if self.owner is None or self.session.assert_delegated() != self.owner:
+            raise self.session.Refused('Nested helper owner differs')
+        self.directory.check()
 
     def release(self):
-        if self.delegated:
-            return  # Session runner alone restores viewer/credentials and releases.
+        # The outer supervisor alone restores the viewer and releases both locks.
         self.check()
-        (self.path / "owner").unlink()
-        self.path.rmdir()

@@ -1,9 +1,9 @@
-"""Local temporary-directory tests only; no real shared lock or session."""
-import os
+"""Nested-helper contract; no live API, credentials or installed paths touched."""
 from pathlib import Path
 import tempfile
+from types import SimpleNamespace
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from privileged_lock import PrivilegedLock
 
@@ -12,70 +12,53 @@ class PrivilegedLockTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
-        self.path = Path(self.temp.name) / "lock"
-
-    def test_standalone_acquires_and_releases_only_its_directory(self):
-        with patch.dict(os.environ, {}, clear=True):
-            lock = PrivilegedLock(self.path, runner=True)
-            lock.acquire()
-            lock.check()
-            self.assertTrue((self.path / "owner").is_file())
-            lock.release()
-            self.assertFalse(self.path.exists())
-
-    def test_helper_without_runner_never_creates_lock(self):
-        with patch.dict(os.environ, {}, clear=True):
-            with self.assertRaises(ValueError):
-                PrivilegedLock(self.path).acquire()
-        self.assertFalse(self.path.exists())
-
-    def prepare_runner(self):
-        owner = "contact-runner-" + "a" * 32
+        self.base = Path(self.temp.name)
+        self.path = self.base / 'privileged-session.lock'
         self.path.mkdir(mode=0o700)
-        (self.path / "owner").write_text(owner + "\n")
-        (self.path / "owner").chmod(0o600)
-        return owner
+        self.owner = 'mac-' + 'a' * 48
+        (self.path / 'owner').write_text(self.owner + '\n')
+        self.directory = Mock()
+        self.session = SimpleNamespace(MAC=self.base, Refused=RuntimeError,
+                                       assert_delegated=Mock(return_value=self.owner),
+                                       Directory=Mock(return_value=self.directory))
+        patcher = patch('privileged_lock.load_session', return_value=self.session)
+        patcher.start()
+        self.addCleanup(patcher.stop)
 
-    def test_exact_delegation_never_releases_runner_lock(self):
-        owner = self.prepare_runner()
-        with patch.dict(os.environ, {"STADTSTACK_PRIVILEGED_LOCK_OWNER": owner}, clear=True):
-            lock = PrivilegedLock(self.path)
+    def test_both_runners_and_helpers_only_delegate(self):
+        for runner in (False, True):
+            lock = PrivilegedLock(self.path, runner=runner)
             lock.acquire()
             lock.check()
             lock.release()
-        self.assertEqual((self.path / "owner").read_text(), owner + "\n")
+            self.assertEqual((self.path / 'owner').read_text(), self.owner + '\n')
+        self.directory.acquire.assert_not_called()
+        self.directory.release.assert_not_called()
 
-    def test_foreign_delegation_refuses_without_mutation(self):
-        owner = self.prepare_runner()
-        with patch.dict(os.environ, {"STADTSTACK_PRIVILEGED_LOCK_OWNER": "foreign-runner-" + "b" * 32}, clear=True):
-            with self.assertRaises(ValueError):
-                PrivilegedLock(self.path).acquire()
-        self.assertEqual((self.path / "owner").read_text(), owner + "\n")
+    def test_missing_global_delegation_refuses(self):
+        self.session.assert_delegated.side_effect = RuntimeError('Lease not held')
+        with self.assertRaises(RuntimeError):
+            PrivilegedLock(self.path, runner=True).acquire()
 
-    def test_existing_without_delegation_refuses(self):
-        self.prepare_runner()
-        with patch.dict(os.environ, {}, clear=True):
-            with self.assertRaises(ValueError):
-                PrivilegedLock(self.path).acquire()
-
-    def test_changed_owner_refuses_operation_and_cleanup(self):
-        with patch.dict(os.environ, {}, clear=True):
-            lock = PrivilegedLock(self.path, runner=True)
-            lock.acquire()
-            (self.path / "owner").write_text("someone-else\n")
-            with self.assertRaises(ValueError):
-                lock.check()
-            with self.assertRaises(ValueError):
-                lock.release()
+    def test_changed_global_owner_refuses_cleanup(self):
+        lock = PrivilegedLock(self.path)
+        lock.acquire()
+        self.session.assert_delegated.return_value = 'vm-' + 'b' * 48
+        with self.assertRaises(RuntimeError):
+            lock.release()
         self.assertTrue(self.path.exists())
 
-    def test_owner_symlink_is_refused(self):
-        owner = self.prepare_runner()
-        (self.path / "owner").unlink()
-        target = Path(self.temp.name) / "foreign"
-        target.write_text(owner + "\n")
-        target.chmod(0o600)
-        (self.path / "owner").symlink_to(target)
-        with patch.dict(os.environ, {"STADTSTACK_PRIVILEGED_LOCK_OWNER": owner}, clear=True):
-            with self.assertRaises(ValueError):
-                PrivilegedLock(self.path).acquire()
+    def test_changed_directory_refuses(self):
+        lock = PrivilegedLock(self.path)
+        lock.acquire()
+        self.directory.check.side_effect = RuntimeError('Owner inode changed')
+        with self.assertRaises(RuntimeError):
+            lock.check()
+
+    def test_noncanonical_path_refuses(self):
+        with self.assertRaises(RuntimeError):
+            PrivilegedLock(self.base / 'another-lock')
+
+
+if __name__ == '__main__':
+    unittest.main()
