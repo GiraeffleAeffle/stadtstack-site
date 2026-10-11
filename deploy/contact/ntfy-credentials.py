@@ -61,18 +61,18 @@ def new_token():
     return "tk_" + "".join(secrets.choice(string.ascii_letters + string.digits) for _ in range(29))
 
 
-def new_credential(bcrypt, *, owner):
+def new_credential(bcrypt, *, owner, topic="contact"):
     password = secrets.token_urlsafe(32)  # 43 ASCII bytes, below bcrypt's 72-byte boundary
     password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt(rounds=12)).decode()
-    credential = {"version": 1, "endpoint": ENDPOINT, "topic": "contact", "token": new_token(), "hash": password_hash}
+    credential = {"version": 1, "endpoint": ENDPOINT, "topic": topic, "token": new_token(), "hash": password_hash}
     if owner:
         credential["password"] = password
     return credential
 
 
-def validate_credential(credential, bcrypt, *, owner):
+def validate_credential(credential, bcrypt, *, owner, topic="contact"):
     require(isinstance(credential, dict) and credential.get("version") == 1 and
-            credential.get("endpoint") == ENDPOINT and credential.get("topic") == "contact",
+            credential.get("endpoint") == ENDPOINT and credential.get("topic") == topic,
             "Keychain item is not this reviewed credential bundle; no automatic migration/rotation.")
     require(re.fullmatch(r"tk_[-_A-Za-z0-9]{29}", credential.get("token", "")) is not None,
             "Keychain token has an unsupported format.")
