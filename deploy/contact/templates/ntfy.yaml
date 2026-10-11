@@ -1,0 +1,126 @@
+{{- if not (regexMatch "^sha256:[a-f0-9]{64}$" .Values.ntfy.image.digest) }}
+{{- fail "ntfy.image.digest must be a reviewed sha256 digest" }}
+{{- end }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: stadtstack-contact-ntfy
+data:
+  server.yml: |
+    listen-http: ":8080"
+    cache-duration: "12h"
+    cache-file: "/data/cache.db"
+    auth-file: "/data/user.db"
+    auth-default-access: "deny-all"
+    attachment-cache-dir: ""
+    base-url: "https://ntfy.stadtstack.eu"
+    upstream-base-url: "https://ntfy.sh"
+    firebase-key-file: ""
+    web-push-public-key: ""
+    web-push-private-key: ""
+    web-push-file: ""
+    enable-signup: false
+    enable-login: true
+    log-level: warn
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stadtstack-contact-ntfy
+spec:
+  replicas: 1
+  strategy: { type: Recreate }
+  selector:
+    matchLabels: { app: stadtstack-contact-ntfy }
+  template:
+    metadata:
+      labels: { app: stadtstack-contact-ntfy }
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: ntfy
+          image: {{ printf "%s@%s" (required "ntfy.image.repository required" .Values.ntfy.image.repository) .Values.ntfy.image.digest | quote }}
+          args: [serve, --config, /etc/ntfy/server.yml]
+          env:
+            - name: NTFY_AUTH_USERS
+              valueFrom:
+                secretKeyRef: { name: stadtstack-contact-ntfy, key: NTFY_AUTH_USERS }
+            - name: NTFY_AUTH_ACCESS
+              valueFrom:
+                secretKeyRef: { name: stadtstack-contact-ntfy, key: NTFY_AUTH_ACCESS }
+            - name: NTFY_AUTH_TOKENS
+              valueFrom:
+                secretKeyRef: { name: stadtstack-contact-ntfy, key: NTFY_AUTH_TOKENS }
+          ports:
+            - { name: http, containerPort: 8080 }
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: [ALL] }
+          volumeMounts:
+            - { name: config, mountPath: /etc/ntfy, readOnly: true }
+            - { name: store, mountPath: /data }
+          readinessProbe:
+            httpGet: { path: /v1/health, port: http }
+          livenessProbe:
+            httpGet: { path: /v1/health, port: http }
+            initialDelaySeconds: 10
+          resources:
+            {{- toYaml .Values.ntfy.resources | nindent 12 }}
+      volumes:
+        - name: config
+          configMap: { name: stadtstack-contact-ntfy }
+        - name: store
+          persistentVolumeClaim: { claimName: stadtstack-contact-ntfy }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stadtstack-contact-ntfy
+spec:
+  type: ClusterIP
+  selector: { app: stadtstack-contact-ntfy }
+  ports:
+    - { name: http, port: 8080, targetPort: http }
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: stadtstack-contact-ntfy
+  annotations:
+    helm.sh/resource-policy: keep
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: {{ required "storage.storageClassName must be owner-approved" .Values.storage.storageClassName | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.ntfy.storageSize | quote }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: stadtstack-contact-ntfy
+  annotations:
+    haproxy-ingress.github.io/ssl-redirect: "true"
+spec:
+  ingressClassName: haproxy
+  tls:
+    - secretName: stadtstack-contact-ntfy-tls
+      hosts: [ntfy.stadtstack.eu]
+  rules:
+    - host: ntfy.stadtstack.eu
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: stadtstack-contact-ntfy
+                port: { number: 8080 }
