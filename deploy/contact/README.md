@@ -102,5 +102,16 @@ Custody uses native Keychain service `org.stadtstack.ntfy.pipeline-publisher`, a
 
 The pipeline-only runner requires an exact Main-signed source/runtime/helper/session/system-Bash hash approval and delegated shared lock. It strips shell/Python startup injection, preserves the canonical credential/session cleanup and verifies viewer restoration before own-lock release. Exactly one UID-bound ntfy-only restart loads the new auth environment; a protected fsynced restart marker is created before deletion. Ambiguous/repeated restart execution permits read-only reconciliation only, never a second delete or implicit publish retry. Contact remains running; a brief notification gap during ntfy restart was owner-approved.
 
-Exactly one generic publication “Stadtstack Pipeline: Testbenachrichtigung” is allowed after gates pass, guarded by a separate durable one-shot marker and verified server ACK/owner read. No topic ACL, credentials, VM file or test notification is claimed live by this preparation section. Once released, the owner subscribes to `pipeline` in the same ntfy iOS server/login; no new owner password is needed.
+Exactly one generic publication “Stadtstack Pipeline: Testbenachrichtigung” is allowed after gates pass, guarded by a separate durable one-shot marker and verified server ACK/owner read. No blind retry or additional test publication is authorized.
+
+### Actual pipeline release — 11 October 2026
+
+Signed/reviewed operator source `8d5a51cf740b03dd995f246bde1cfe38757b1f92` completed the approved extension at16:37:14.590643UTC. Native Keychain custody and the exact max-owned mode0600 VM copy matched. Existing owner/contact credentials, contact ACL, inbox Secret and contact Deployment were preserved; the contact image remains the previously accepted digest. Only the three ntfy auth CSV fields were extended, and exactly one UID-bound ntfy-only restart replaced pod UID `7942390b-0c1b-4217-8a06-68d408d355af` with Ready pod UID `afb9bca8-baa1-4526-a157-ea2d11b7061d`, retaining the pinned official image.
+
+Actual owner reads returned200 on both `contact` and `pipeline`. Anonymous pipeline read, pipeline-publisher reads of pipeline/contact, and contact-publisher pipeline read returned403. The single generic test was accepted with ACK `7oNwGwb9mww0`, topic `pipeline`, exact body above, and observed by owner read; publication attempts1. This establishes server publication/readback, **not owner-confirmed pipeline iPhone delivery**.
+
+Evidence: `~/.cache/cluster-ops/ntfy-pipeline-release-result.json`; protected durable `ntfy-pipeline-restart-attempt.json` and `ntfy-pipeline-test-attempt.json` retain the one-shot boundaries. Governed session exited0; viewer start/status/watch restoration was verified and only the owning shared lock was released at16:37:27.722892UTC. RebuildR1 received readiness only after this full cleanup.
+
+Owner setup: in the ntfy iOS app, use the existing server `https://ntfy.stadtstack.eu` and existing `owner` login, add subscription topic **`pipeline`**, and allow notifications. Keep `contact` subscribed. No new owner password is needed; never enter the pipeline publisher token into the phone. Do not send another test without separate owner authorization.
+
 
