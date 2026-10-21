@@ -1,0 +1,6 @@
+apiVersion: v2
+name: stadtstack-contact
+description: Isolated SMTP contact service for stadtstack.eu
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

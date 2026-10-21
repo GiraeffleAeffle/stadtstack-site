@@ -1,0 +1,71 @@
+name: Contact image
+on:
+  workflow_dispatch:
+  push:
+    tags: ['contact-image-*']
+permissions:
+  contents: read
+concurrency:
+  group: contact-image-${{ github.ref }}
+  cancel-in-progress: false
+env:
+  IMAGE: ghcr.io/giraeffleaeffle/stadtstack-contact
+jobs:
+  image:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: contact-service/package-lock.json
+      - name: Install contact service dependencies
+        working-directory: contact-service
+        run: npm ci
+      - name: Test contact service
+        working-directory: contact-service
+        run: npm test
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+      - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - id: meta
+        uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0
+        with:
+          images: ${{ env.IMAGE }}
+          tags: type=sha,format=long
+      - id: build
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: ./contact-service
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha,scope=contact-image
+          cache-to: type=gha,scope=contact-image,mode=max
+      - name: Report the digest and source identity
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
+        run: |
+          echo "DIGEST: ${DIGEST}"
+          {
+            echo '### Stadtstack contact image'
+            echo "Image: \`${IMAGE}@${DIGEST}\`"
+            echo "Source repository: \`${GITHUB_REPOSITORY}\`"
+            echo "Source ref: \`${GITHUB_REF}\`"
+            echo "Source commit: \`${GITHUB_SHA}\`"
+            echo "DIGEST: ${DIGEST}"
+            echo 'This workflow publishes the encrypted contact inbox image only; it does not deploy or provision keys.'
+            echo 'Pin this digest and the independently reviewed self-hosted ntfy digest before a separately authorized release.'
+            echo 'Make the GHCR package public after the first push if the cluster has no pull secret.'
+          } >> "$GITHUB_STEP_SUMMARY"

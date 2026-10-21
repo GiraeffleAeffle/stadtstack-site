@@ -1,0 +1,101 @@
+{{- if ne .Release.Namespace "stadtstack-contact" }}
+{{- fail "contact service requires isolated stadtstack-contact namespace" }}
+{{- end }}
+{{- if not (regexMatch "^sha256:[a-f0-9]{64}$" .Values.image.digest) }}
+{{- fail "image.digest must be a reviewed sha256 digest" }}
+{{- end }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stadtstack-contact
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels: { app: stadtstack-contact }
+  template:
+    metadata:
+      labels: { app: stadtstack-contact }
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+      containers:
+        - name: contact
+          image: {{ printf "%s@%s" (required "image.repository required" .Values.image.repository) .Values.image.digest | quote }}
+          ports:
+            - { name: http, containerPort: 8081 }
+            - { name: admin, containerPort: 8082 }
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: [ALL] }
+          env:
+            - { name: PORT, value: "8081" }
+            - { name: CONTACT_ALLOWED_ORIGINS, value: "https://stadtstack.eu" }
+            - { name: ADMIN_PORT, value: "8082" }
+            - { name: CONTACT_STORE_DIR, value: "/data/inbox" }
+            - { name: CONTACT_MAX_MESSAGES, value: {{ .Values.maxMessages | quote }} }
+            - { name: NTFY_URL, value: "http://stadtstack-contact-ntfy:8080/contact" }
+            - name: CONTACT_TRUSTED_PROXIES
+              value: {{ join "," .Values.ingress.trustedProxyIPs | quote }}
+            - name: CONTACT_ENCRYPTION_KEY
+              valueFrom:
+                secretKeyRef: { name: {{ .Values.secretName | quote }}, key: CONTACT_ENCRYPTION_KEY }
+            - name: CONTACT_ADMIN_TOKEN
+              valueFrom:
+                secretKeyRef: { name: {{ .Values.secretName | quote }}, key: CONTACT_ADMIN_TOKEN }
+            - name: NTFY_TOKEN
+              valueFrom:
+                secretKeyRef: { name: {{ .Values.secretName | quote }}, key: NTFY_TOKEN }
+          volumeMounts:
+            - { name: inbox, mountPath: /data }
+          readinessProbe:
+            httpGet: { path: /healthz, port: http }
+          livenessProbe:
+            httpGet: { path: /healthz, port: http }
+            initialDelaySeconds: 10
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: inbox
+          persistentVolumeClaim: { claimName: stadtstack-contact-inbox }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stadtstack-contact
+spec:
+  selector: { app: stadtstack-contact }
+  type: ClusterIP
+  ports:
+    - { name: http, port: 8081, targetPort: http }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stadtstack-contact-admin
+spec:
+  type: ClusterIP
+  selector: { app: stadtstack-contact }
+  ports:
+    - { name: admin, port: 8082, targetPort: admin }
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: stadtstack-contact-inbox
+  annotations:
+    helm.sh/resource-policy: keep
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: {{ required "storage.storageClassName must be owner-approved" .Values.storage.storageClassName | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.storage.size | quote }}

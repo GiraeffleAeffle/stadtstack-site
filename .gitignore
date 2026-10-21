@@ -1,5 +1,6 @@
 # dependencies
 /node_modules
+/contact-service/node_modules
 /.pnp
 .pnp.*
 .yarn/*
@@ -32,3 +33,6 @@ yarn-error.log*
 
 # TypeScript incremental cache
 *.tsbuildinfo
+
+# Governed Python helper bytecode
+__pycache__/
