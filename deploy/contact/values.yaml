@@ -1,6 +1,6 @@
 image:
   repository: "ghcr.io/giraeffleaeffle/stadtstack-contact"
-  digest: "sha256:2ee1254d03cc6ae5cb258b1b7c984bb0eeab52af9c9805d901c06e461a7da1d3"
+  digest: "sha256:e1a709c9eeda69a9ac64133cc30c9ff38fbd1215f7ce04cce2803c5b2b6665cf"
 secretName: stadtstack-contact-inbox
 storage:
   size: 1Gi
