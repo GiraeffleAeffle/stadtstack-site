@@ -1005,6 +1005,7 @@ export default function StadtstackExperience() {
         <section id="family" className="family" aria-labelledby="family-title">
           <div className="section-head">
             <h2 id="family-title">{family.title[language]}</h2>
+            <p>{family.intro[language]}</p>
           </div>
           <ul className="family-grid">
             {family.cards.map((member) => (
@@ -1013,14 +1014,24 @@ export default function StadtstackExperience() {
                   {member.id === "ledger" && (
                     <Image className="family-mark" src="/ledger-mark.svg" alt="" width={40} height={44} unoptimized />
                   )}
+                  {member.id === "loyalty" && (
+                    <Image className="family-mark" src="/ladenrunde-mark.svg" alt="" width={40} height={44} unoptimized />
+                  )}
+                  {member.id === "participation" && (
+                    <Image className="family-mark" src="/mitmachen-mark.svg" alt="" width={40} height={44} unoptimized />
+                  )}
                   <h3>{member.title[language]}</h3>
                 </div>
                 <p className="family-badge">{member.badge[language]}</p>
                 <p className="family-description">{member.description[language]}</p>
-                <a className="family-link" href={member.href}>
-                  {member.linkLabel[language]}
-                  {member.id !== "stadtstack" && <Icon name="external" size={16} />}
-                </a>
+                {member.href ? (
+                  <a className="family-link" href={member.href}>
+                    {member.linkLabel[language]}
+                    {member.id !== "stadtstack" && <Icon name="external" size={16} />}
+                  </a>
+                ) : (
+                  <p className="family-badge">{member.linkLabel[language]}</p>
+                )}
               </li>
             ))}
           </ul>
