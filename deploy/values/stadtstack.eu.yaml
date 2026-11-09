@@ -5,5 +5,5 @@ hosts:
   roebel: roebel.stadtstack.eu
 image:
   repository: ghcr.io/giraeffleaeffle/stadtstack-site
-  # Image workflow 42420449857, source 0b5741d650a7c938100e0ab490f78813ca6c63fe.
-  digest: "sha256:d941dc3abbc92c38ffbaa60816f44ee9d2a18316386a0834eaaa117f5ba81859"
+  # Owner-approved homepage ("Eine Stadt, viermal gesehen"), source 8eb90a5; restored 2026-11-09 (Helm rollback to revision 9).
+  digest: "sha256:6e8793a4779d5579947495c867d35af560def0f0b90f0729d6381e328f0e101c"
