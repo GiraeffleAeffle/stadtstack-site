@@ -1,123 +1,124 @@
-![The city model: four layers, one place](/blog/der-stack/modell.webp)
+![The city model from stadtstack.eu: the same square on four layers](/blog/der-stack/modell.webp)
 
-**In short:** Stadtstack is an independent civic lab from Strausberg, Germany. I'm testing how a town can make better decisions with open data, participation and digital tools – on four layers: infrastructure, knowledge, decisions, delivery. Some of it already runs (sourced AI data access for 319 municipalities); much of it is a prototype or lab demo. This post tells how it started, what I tested, and where the limits are.
+**In short:** Stadtstack is an independent civic lab from Strausberg, a town east of Berlin. I want decisions about a town to rest on facts that anyone can check. So I collect public data for 319 municipalities, make it comparable, and try out how it helps with participation, in everyday life and in a crisis. Some of it runs, much of it is a prototype, some of it didn't work. All of that is in here.
 
-### How it started: a question at the door
+### A question at the door
 
 In February 2026, someone knocked on my door and asked who I'd vote for in Strausberg's mayoral election. I didn't know. Honestly, I didn't know my town very well yet.
 
-So I started researching: who's running, what do they want, what problems do people here actually have? I researched a lot with AI and talked to many people – candidates, members of the town council, people around town.
+So I started researching: who's running, what do the candidates want, what problems do people here actually have? I researched a lot with AI and talked to many people: candidates, members of the town council, people around town.
 
-One thing stuck with me: many decisions, I was told, end up being made from the gut. I understand why – documents are scattered, time is short, volunteers decide after work. But I believe decisions about our towns should rest on facts. And the facts often exist already; they're just hard to find.
+One thing stuck with me: many decisions, I was told, end up being made from the gut. I understand where that comes from. The documents are scattered, time is short, and the council is made up of volunteers who decide after work. I still think decisions about our town should rest on facts.
 
-That became Stadtstack.
+### The facts exist. You just can't find them.
+
+Two examples from Strausberg.
+
+Does the town have a heat plan? Yes. The town council adopted it on 21 May 2026. That's on page 4 of the [official gazette 04/2026](https://www.stadt-strausberg.de/wp-content/uploads/2026/06/2026_04_Amtsblatt_SRB.pdf). If you don't know that, you'll search for a long time.
+
+How good is the internet? Gigabit fixed-line internet is available to 82 percent of households. In the group of 15 similar-sized places, the middle value is 97 percent (Federal Network Agency, broadband atlas, as of June 2026).
+
+![Stadtkompass, Strausberg profile: where does the town differ from similar-sized places? Sources: BBSR (INKAR), Federal Network Agency. Structured sources, not independently verified. The dashboard is in German.](/blog/der-stack/abweichungen.webp)
+
+Figures like these are public. They sit with the Federal Network Agency, the statistical offices, council information systems and official gazettes. But they're spread across dozens of portals, tables and PDF attachments. Nobody who serves on a council as a volunteer has the time to piece that together.
+
+Whether 82 percent is a problem isn't for software to decide. That's for the people in town and their council. But the number belongs on the table before a decision is made. That became Stadtstack.
 
 ### Why small towns
 
-I live in Strausberg. Röbel on the Müritz is where a friend lives. And I come from Stimpfach, which is much smaller still. Big cities have data portals, digital departments and consulting budgets. Small towns usually have none of that – but the same questions: heat planning, solar and wind, housing, schools, transport, budgets. That's where I want to start, and where I want to go later.
+I live in Strausberg. A friend lives in Röbel on Lake Müritz. And I come from Stimpfach, a place that is much smaller still. I'd like to do this there too one day.
 
-### The path: from old ideas to a stack
+Big cities have data portals, digital departments and consulting budgets. Small municipalities often have none of that, but the same questions: heat planning, solar and wind, housing, schools, transport, budgets. And they're the majority. The three districts I cover so far contain 319 municipalities. Half of them have fewer than about 630 residents, and only 17 have more than 10,000.
 
-Stadtstack wasn't designed on a whiteboard. It grew out of experiments, some older than the project:
+### The path: detours that paid off
 
-- **ZK Loyalty** began at a hackathon a few years ago: a loyalty programme for local shops using zero-knowledge proofs. In a civic context it found a new purpose.
-- **The rent deposit** was another earlier idea; it lives on, in a different form, in *Ledger of Life*.
-- **ZK Residency** was the first app I built after getting into civic tech: how can you prove you live in a town without revealing more than necessary? It became the participation site *Mitmachen*.
-- **The Röbel app** was originally built by a friend. I met him as one of the winners of a hackathon; we share similar goals and teamed up. I forked his app and kept building on it. It started from a simple observation: people complain about their town on Facebook – but to whom? That solves nothing. The idea: a social network for the town where you report a problem and tag the *city AI*. It prepares a sourced proposal for the council and the responsible departments, who can work on it with AI support and get back to people faster. Going forward, this interface is meant to live in *Ledger of Life* and *Mitmachen*.
-- **3D maps and a game**, built from OpenStreetMap and other open data, to show what is actually happening in town – visibly, not buried in PDF attachments.
+Stadtstack wasn't designed on a whiteboard. It grew out of experiments, some of them older than the project.
 
-Eventually it was clear that all these interfaces need the same thing: reliable knowledge about the town. That's where the *stack* came from – four layers, with results flowing back into what the town knows.
+- **ZK Loyalty** comes from a hackathon a few years ago: a loyalty programme for local shops where customers decide for themselves what they reveal. In a civic context it found a new purpose and is now called *Ladenrunde*.
+- **The rent deposit** was another earlier idea. It lives on in a different form in *Ledger of Life*.
+- **ZK Residency** was the first app I built after getting into this field. The question behind it: how do you prove you live in a town without revealing your address? It became the participation site *Mitmachen*.
+- **The Röbel app** was originally built by a friend. I met him as one of the winners of a hackathon, we share similar goals, and we teamed up. I forked his app and kept building on it. The starting point: people complain about their town on Facebook, but to whom? That solves nothing. The idea is a social network for the town. You report a problem and tag the *city AI*. It prepares a sourced proposal that goes to the councillors and the responsible departments, and people get an answer faster. Going forward, this interface is meant to live in *Ledger of Life* and *Mitmachen*.
+- **3D maps and a game** built from OpenStreetMap and other open data show what is happening in town, visibly rather than in PDF attachments.
+
+At some point it was clear that all these interfaces need the same thing: reliable knowledge about the town. That's where the idea of a stack with four layers came from.
 
 {{timeline}}
 
+### The stack: four layers, one loop
+
+The model on the homepage shows the same square four times: built, measured, discussed, changed. The layers build on each other, and whatever gets delivered flows back as new knowledge. A town also doesn't have to work everything out alone. If towns can compare themselves, they can see what worked elsewhere.
+
 {{stack}}
 
-### Layer 1 · Provide infrastructure
-*What carries and connects the town?*
+### Layer 1 · Infrastructure: what holds, even when something fails?
 
-![Layer 01 in the model: infrastructure](/blog/der-stack/ebene-1.webp)
+Everything runs on my own infrastructure rather than with a large cloud provider: rented servers in the EU, a private network and a home server. If towns don't control their own data and tools, their ability to act depends on others.
 
-Everything is self-hosted: a Kubernetes cluster (Talos) on Hetzner, a private overlay network (NetBird) and a home server. Data sovereignty isn't a buzzword for me – if towns can't control their own data and tools, their ability to act depends on others.
+The second part is preparing for failure. That's no longer hypothetical: in early November 2026, suspected cyberattacks knocked out fridges and freezers in supermarkets across several European countries ([Reuters](https://www.reuters.com/business/retail-consumer/temperature-soars-swedish-grocery-store-freezers-one-store-blames-hackers-2026-11-02), [BBC](https://www.bbc.co.uk/news/articles/cwy8lm1m59mvo)). In September, 5.8 terabytes of data stolen from Berlin's administration were published, possibly including critical-infrastructure data ([ZEIT](https://www.zeit.de/politik/deutschland/2026-09/cyberangriff-berlin-rhysida-hackergruppe-senatsverwaltung-datenleck), [taz](https://taz.de/Fiasko-nach-Hackerangriff-in-Berlin/!6210542)). Material like that can make further attacks easier.
 
-The second part of this layer is **resilience**. What happens when the internet goes down – in a flood, a blackout, or an attack on critical infrastructure? That's no longer hypothetical: in early November 2026, suspected cyberattacks knocked out fridges and freezers in supermarkets across several European countries ([Reuters](https://www.reuters.com/business/retail-consumer/temperature-soars-swedish-grocery-store-freezers-one-store-blames-hackers-2026-11-02), [BBC](https://www.bbc.co.uk/news/articles/cwy8lm1m59mvo)). In September, 5.8 terabytes of data stolen from Berlin's administration were published, possibly including critical-infrastructure data ([ZEIT](https://www.zeit.de/politik/deutschland/2026-09/cyberangriff-berlin-rhysida-hackergruppe-senatsverwaltung-datenleck), [taz](https://taz.de/Fiasko-nach-Hackerangriff-in-Berlin/!6210542)) – material that can make further attacks easier. In the *Offline Mesh City* I tested how small messages and payments can travel device to device over LoRa radio and Reticulum, with no internet at all. Longer term I'm thinking about mesh links between towns and local AI that keeps working offline.
+So I tested how short messages and payments can travel from device to device with no internet at all, over long-range radio (LoRa and Reticulum). Each of the 319 municipalities also has a downloadable town pack that works offline. Longer term I'm thinking about radio links between towns and local AI that keeps helping without a network.
 
-> **Status & limits:** The cluster and network run Stadtstack in production. The mesh is a one-radio-hop lab demo – not a citywide network, not a working payment system. Test units have no monetary value.
+> **Status & limits:** The servers and network are in operation. The radio link is a lab test over a single hop, not a citywide network and not a working payment system. Test units have no monetary value.
 
-### Layer 2 · Perceive & understand
-*What is happening locally, and what does it mean?*
+### Layer 2 · Knowledge: what is happening locally?
 
-![Layer 02 in the model: knowledge](/blog/der-stack/ebene-2.webp)
-![Stadtkompass: the Strausberg town profile from the live layer](/blog/der-stack/stadtkompass.webp)
+This has become the core. I collect public municipal sources and prepare them so that every figure keeps its source and its date.
 
-This has become the core. The **civic data pipeline** collects public municipal sources – council information systems, decisions, budgets, the national register of energy installations, official statistics, OpenStreetMap – and prepares them so that answers stay traceable: with source, date and clear limits.
+- **The Stadtkompass** shows a profile for all 319 municipalities in the three districts: population, finances, energy, services, accessibility. It compares each place with similar-sized ones and shows the largest differences.
+- **Energy:** about 78,000 installations from the national energy register, updated weekly.
+- **Council data:** some 5,500 council papers from 33 municipalities, with decisions where they are recorded.
+- **Heat planning:** I looked for evidence in all 319 municipalities. I found one adopted plan (Strausberg), six plans in progress and 22 municipalities where the topic has only been discussed so far. For 290 there is no evidence. That doesn't mean nothing is happening there. It shows how little can be found.
+- **Access for AI assistants:** through an open interface (MCP), tools like Claude or ChatGPT can query this data and answer with a source instead of guessing. The same interface will later feed the game, the city AI and participation.
 
-On top sits an **MCP server**: an interface AI tools can use to read this data. The MCP is the shared layer for everything else – the game, the city AI, dashboards – and it makes towns comparable.
+Alongside it there is a smaller, more strictly checked knowledge layer for nine small towns in Brandenburg, Schleswig-Holstein and Mecklenburg-Western Pomerania. Its aim is to trace every statement back to the original document.
 
-What I tested:
-- **Big cities:** 8 cities, about 14,600 records from open interfaces (roadworks, OSM, council systems).
-- **Small towns:** a checked knowledge layer for 9 small towns across 3 districts in Brandenburg, Schleswig-Holstein and Mecklenburg-Western Pomerania.
-- **A live layer for all 319 municipalities** in those districts: master data, about 78,000 energy installations, council data – now for 44 of 319 municipalities – a six-dimension "Stadtkompass" and offline town packs.
-- **A fixed 30-question test:** correctness 60/60, sourcing 46/60, usefulness only 13/60.
+> **Status & limits:** AI access is live, read-only and with a personal access key. The Stadtkompass is an internal prototype and not yet public. Its data is labelled "structured source, not independently verified". A rank is not a rating of quality of life.
 
-That last number is the honest one: correct, sourced answers aren't enough if they don't help. A first pipeline rebuild hit an architectural limit, and I closed it without a release. The second attempt goes deeper: capturing decisions, weighed objections, funding chains and operators reliably – every statement traceable to the original document.
+### Layer 3 · Decisions: who weighs things up?
 
-> **Status & limits:** MCP access is live (read-only, personal token). The live layer is labelled "structured source, not independently verified". Usefulness is the open problem. More at [mcp.stadtstack.eu](https://mcp.stadtstack.eu/health).
+No software decides here. Decisions stay with people. They should just be better informed.
 
-### Layer 3 · Deliberate & decide
-*What do we want to do, and who decides?*
+- **Have your say** (in *Ledger of Life*) collects pros and cons on a topic, shows them as a chart and adds an opinion poll. Topics can connect several towns.
+- **The city AI** points to sources instead of speaking for the town.
+- **Mitmachen** is an anonymous, advisory poll for Strausberg. Participants have it confirmed once that they live here. After that, the vote itself can no longer be linked to the person.
 
-![Layer 03 in the model: decisions](/blog/der-stack/ebene-3.webp)
-![Mitmachen: advisory, anonymous polling with a passkey](/blog/der-stack/mitmachen.webp)
+![Ledger of Life: housing, deposit and weighing things up together (test network)](/blog/der-stack/ledger.webp)
+![Mitmachen: advisory, anonymous polling](/blog/der-stack/mitmachen.webp)
 
-This isn't about software making decisions. Decisions stay with people – they should just be better informed.
+> **Status & limits:** Participation in Stadtstack is advisory and doesn't replace official procedures. Mitmachen is still closed: the people who confirm residence are missing.
 
-- **Have your say** (in *Ledger of Life*) collects pros and cons on a topic and shows them as a sunburst, plus an opinion poll. Topics can connect towns.
-- **@city-ai** points to sources instead of speaking for the town.
-- **Mitmachen** was a participation site for Strausberg with zero-knowledge proof of residence (from *ZK Residency*): you can show you live here without revealing your address.
+### Layer 4 · Delivery: what reaches people?
 
-> **Status & limits:** Participation in Stadtstack is advisory and doesn't replace official procedures. Mitmachen is closed to participation; the site stays online to view.
+- **Ledger of Life** connects housing, rent deposits and weighing things up together. It adds a map of local places and a Home Node for the home, which keeps the app usable offline.
+- **Ladenrunde:** loyalty points for local shops. Customers and businesses find each other, and the points stay encrypted.
+- **The game:** with the mascots Mecky in Röbel and Strausi in Strausberg, you explore real streets and real topics, with sources.
+- **Mascots:** Japan and Korea show with their *yuru-chara* how much characters help people connect with a place and carry a message. Mecky and Strausi are my small-scale attempt.
 
-### Layer 4 · Act & deliver
-*How does it become a visible result?*
-
-![Layer 04 in the model: delivery](/blog/der-stack/ebene-4.webp)
-![Ledger of Life (testnet)](/blog/der-stack/ledger.webp)
-![Ladenrunde: loyalty for local shops (Sepolia testnet)](/blog/der-stack/ladenrunde.webp)
 ![The game with Mecky (Röbel) and Strausi (Strausberg)](/blog/der-stack/spiel.webp)
+![Ladenrunde: loyalty points for local shops (test operation)](/blog/der-stack/ladenrunde.webp)
 
-- **Ledger of Life** connects housing, rent deposits and weighing things up together, plus a map layer for local places and a Home Node for offline use (Solana testnet).
-- **ZK Loyalty / Ladenrunde:** loyalty for local shops, so customers and businesses find each other – without collecting customer data (Sepolia testnet).
-- **The game:** the town as a game, a way into Stadtstack without first having to understand blockchain.
-- **Mascots:** in Japan and Korea, *yuru-chara* show how much characters help people identify with a place and carry a message. With Mecky and Strausi I'm trying that on a small scale.
+> **Status & limits:** Prototypes and pilots. All blockchain features run on test networks. Test units have no monetary value and create no claims. In Ladenrunde, transactions are currently paused.
 
-> **Status & limits:** Prototypes and pilots. All blockchain features run on testnets; test units have no monetary value and create no claims.
+### What didn't work
 
-### Across all layers: impact flows back
-
-The heart of the model is the loop: what gets delivered gets measured and flows back into what the town knows. And no town has to figure everything out alone – if towns can compare themselves, they can see what worked elsewhere and move in a better direction together. Rights and trust apply on every layer: privacy, sources, clear limits.
-
-### What I learned
-
-- **The data exists – it just isn't usable.** Almost everything a councillor needs for a decision is published somewhere. The problem is finding it, connecting it, and trusting it.
-- **Correct isn't the same as helpful.** 60/60 on correctness, 13/60 on usefulness. That changed my priorities.
-- **Being honest about limits is a feature.** Testnet, pilot, lab demo – clearly named builds more trust than any promise.
-- **Small towns aren't an edge case.** They're the majority.
-- **One shared knowledge layer carries many interfaces.** The game, the city AI and the dashboard need the same foundation.
+- **Correct isn't yet helpful.** I measure the knowledge layer for the nine small towns with 30 fixed questions. It scores 60 out of 60 on correctness, 46 out of 60 on sourcing, and only 13 out of 60 on usefulness. The answers are right, but too rarely help.
+- **The first rebuild failed.** I closed a first attempt at building the data preparation more thoroughly at the end of October without a release. It hit a limit in its architecture. The second attempt is under way.
+- **Council data is hard to get.** 33 of 319 municipalities isn't many. For 13 sources, automated retrieval is currently blocked, and access there isn't settled yet.
+- **No everyday test yet.** The radio link is a lab test, participation is closed, the loyalty programme is paused. Most of this still has to prove itself with real users.
 
 ### What's next
 
-- Finish the sourced knowledge layer for the 9 small towns and make it measurably more useful.
-- Council data for more municipalities, new council documents processed the same day.
-- Grow from 9 to 50–300 municipalities without recomputing everything each time.
-- Town-to-town comparison: energy transition, planning, budgets, demographics.
+- Finish the checked knowledge layer for the nine small towns, with decisions, objections, funding and operators, and measure it with the same test.
+- For each difference, show what similar places decided and funded.
+- More council data, and new council papers sorted the same day.
+- Grow from nine small towns to 50–300 municipalities.
 
 ### Get involved
 
-- **Municipalities and administrations:** if you'd like to see how your town looks in the data, get in touch.
-- **Councillors and engaged citizens:** try the MCP access with your AI tool.
-- **Developers and researchers:** let's work together.
-- **Everyone:** look at the projects and tell me what's missing.
+- **You work in a municipality or administration?** I'm happy to show you your place's profile and hear what is wrong or missing in it.
+- **You sit on a council or are active locally?** Tell me which question you'd have liked answered before the last decision.
+- **You develop or do research?** You can try the AI access with a personal key.
 
-→ [Contact](https://stadtstack.eu/kontakt)
+→ [Contact](/kontakt#en)
 
 *Stadtstack is an independent project and not an official municipal service.*

@@ -57,34 +57,34 @@ export function StackDiagram({ language }: { language: Language }) {
 
 const STEPS = {
   de: [
+    ["Vor 2026", "Zwei ältere Ideen", "Ein Treueprogramm von einem Hackathon und die Mietkaution"],
     ["Februar 2026", "Die Frage an der Haustür", "Recherche zur Bürgermeisterwahl, Gespräche in der Stadt"],
-    ["danach", "ZK Residency", "Wohnsitz nachweisen, ohne mehr preiszugeben – später Mitmachen"],
-    ["danach", "Röbel-App-Fork", "Soziales Netz für die Stadt mit Stadt-KI, gemeinsam mit einem Freund"],
-    ["danach", "Ledger · Ladenrunde · Spiel", "Alte Ideen (Mietkaution, Hackathon-Loyalty) neu gedacht"],
+    ["", "Die ersten Apps", "ZK Residency, der Fork der Röbel-App, 3D-Karten und das Spiel"],
     ["30. Sep 2026", "stadtstack.eu online", "Das Stadtmodell: eine Stadt, viermal gesehen"],
-    ["12. Okt 2026", "Civic MCP 0.3.2", "KI-Zugang zu Stadtdaten mit Quellen"],
-    ["Nov 2026", "Live-Ebene", "319 Gemeinden, Ratsdaten für 44 davon"],
+    ["12. Okt 2026", "KI-Zugang zu Stadtdaten", "Antworten mit Quelle für KI-Assistenten (Civic MCP 0.3.2)"],
+    ["3. Nov 2026", "Daten für alle 319 Gemeinden", "Stammdaten, Energieanlagen und erste Ratsdaten"],
+    ["10. Nov 2026", "Größte Abweichungen", "Jeder Ort im Vergleich mit ähnlich großen Orten"],
   ],
   en: [
+    ["Before 2026", "Two earlier ideas", "A loyalty programme from a hackathon and the rent deposit"],
     ["February 2026", "The question at the door", "Researching the mayoral election, talking to people in town"],
-    ["then", "ZK Residency", "Prove residence without revealing more – later Mitmachen"],
-    ["then", "Röbel app fork", "A social network for the town with a city AI, together with a friend"],
-    ["then", "Ledger · Ladenrunde · game", "Old ideas (rent deposit, hackathon loyalty) rethought"],
+    ["", "The first apps", "ZK Residency, the fork of the Röbel app, 3D maps and the game"],
     ["30 Sep 2026", "stadtstack.eu online", "The city model: one city, seen four ways"],
-    ["12 Oct 2026", "Civic MCP 0.3.2", "AI access to town data, with sources"],
-    ["Nov 2026", "Live layer", "319 municipalities, council data for 44 of them"],
+    ["12 Oct 2026", "AI access to town data", "Sourced answers for AI assistants (Civic MCP 0.3.2)"],
+    ["3 Nov 2026", "Data for all 319 municipalities", "Master data, energy installations and first council data"],
+    ["10 Nov 2026", "Largest differences", "Every place compared with similar-sized ones"],
   ],
 };
 
 export function Timeline({ language }: { language: Language }) {
-  const title = language === "de" ? "Der Weg seit Februar 2026" : "The path since February 2026";
+  const title = language === "de" ? "Der Weg bis heute" : "The path so far";
   return (
     <figure className="blog-timeline">
       <figcaption>{title}</figcaption>
       <ol>
         {STEPS[language].map(([when, what, detail], i) => (
           <li key={what} style={{ ["--dot" as string]: LEVELS[3 - Math.min(3, Math.floor(i / 2))].color }}>
-            <span className="blog-timeline-when">{when}</span>
+            {when && <span className="blog-timeline-when">{when}</span>}
             <strong>{what}</strong>
             <span className="blog-timeline-detail">{detail}</span>
           </li>

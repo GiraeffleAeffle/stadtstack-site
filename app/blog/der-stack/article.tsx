@@ -8,8 +8,8 @@ import "../../kontakt/contact.css";
 import "../blog.css";
 
 const TEXT = {
-  de: { eyebrow: "Blog · 9. November 2026 · Maximilian Stahl", title: "Eine Stadt, viermal gesehen", subtitle: "Warum ich Stadtstack baue – und was ich auf allen vier Ebenen ausprobiert habe", toc: "In diesem Beitrag" },
-  en: { eyebrow: "Blog · 9 November 2026 · Maximilian Stahl", title: "One city, seen four ways", subtitle: "Why I'm building Stadtstack – and what I've tested on every layer", toc: "In this post" },
+  de: { eyebrow: "Blog · 10. November 2026 · Maximilian Stahl", title: "Aus dem Bauch oder mit Fakten?", subtitle: "Wie eine Frage an der Haustür zu Stadtstack wurde, was ich seitdem ausprobiert habe und was noch nicht funktioniert", toc: "In diesem Beitrag" },
+  en: { eyebrow: "Blog · 10 November 2026 · Maximilian Stahl", title: "From the gut, or from the facts?", subtitle: "How a question at my front door became Stadtstack, what I've tried since, and what doesn't work yet", toc: "In this post" },
 };
 
 export default function BlogArticle({ de, en }: { de: string; en: string }) {

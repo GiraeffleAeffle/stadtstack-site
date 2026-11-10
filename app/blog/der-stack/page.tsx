@@ -3,20 +3,20 @@ import { join } from "node:path";
 import type { Metadata } from "next";
 import BlogArticle from "./article";
 
-const description = "Warum ich Stadtstack baue und was ich auf allen vier Ebenen ausprobiert habe: Infrastruktur, Wissen, Entscheidungen, Umsetzung.";
+const description = "Wie eine Frage an der Haustür zu Stadtstack wurde: öffentliche Daten für 319 Gemeinden, vier Ebenen, was läuft und was noch nicht funktioniert.";
 
 export const metadata: Metadata = {
-  title: "Eine Stadt, viermal gesehen – der Stack · Stadtstack Blog",
+  title: "Aus dem Bauch oder mit Fakten? · Stadtstack Blog",
   description,
   openGraph: {
     url: "https://stadtstack.eu/blog/der-stack",
-    title: "Eine Stadt, viermal gesehen – warum ich Stadtstack baue",
+    title: "Aus dem Bauch oder mit Fakten? Warum ich Stadtstack baue",
     description,
     images: ["https://stadtstack.eu/blog/der-stack/modell.webp"],
     locale: "de_DE",
     type: "article",
   },
-  twitter: { card: "summary_large_image", title: "One city, seen four ways – why I'm building Stadtstack", images: ["https://stadtstack.eu/blog/der-stack/modell.webp"] },
+  twitter: { card: "summary_large_image", title: "From the gut, or from the facts? Why I'm building Stadtstack", images: ["https://stadtstack.eu/blog/der-stack/modell.webp"] },
 };
 
 export default function DerStackPage() {

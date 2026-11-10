@@ -1,123 +1,124 @@
-![Das Stadtmodell: vier Ebenen, ein Ort](/blog/der-stack/modell.webp)
+![Das Stadtmodell von stadtstack.eu: derselbe Platz auf vier Ebenen](/blog/der-stack/modell.webp)
 
-**Kurz gesagt:** Stadtstack ist ein unabhängiges Stadtlabor aus Strausberg. Ich teste, wie eine Stadt mit offenen Daten, Beteiligung und digitalen Werkzeugen besser entscheiden kann – auf vier Ebenen: Infrastruktur, Wissen, Entscheidungen, Umsetzung. Manches läuft schon (ein KI-Datenzugang mit Quellen für 319 Gemeinden), vieles ist Prototyp oder Labor-Demo. Dieser Text erzählt, wie es dazu kam, was ich getestet habe und wo die Grenzen sind.
+**Kurz gesagt:** Stadtstack ist ein unabhängiges Stadtlabor aus Strausberg. Ich möchte, dass Entscheidungen über eine Stadt auf Fakten beruhen, die alle nachprüfen können. Dafür sammle ich öffentliche Daten für 319 Gemeinden, mache sie vergleichbar und probiere aus, wie sie bei Beteiligung, im Alltag und im Krisenfall helfen. Einiges läuft, vieles ist Prototyp, manches hat nicht funktioniert. Hier steht alles davon.
 
-### Wie alles anfing: eine Frage an der Haustür
+### Eine Frage an der Haustür
 
 Im Februar 2026 stand jemand an meiner Tür und fragte, wen ich bei der Bürgermeisterwahl in Strausberg wählen will. Ich wusste es nicht. Ehrlich gesagt kannte ich meine Stadt damals noch nicht besonders gut.
 
-Also habe ich angefangen zu recherchieren: Wer kandidiert, was wollen die Kandidierenden, welche Probleme haben die Menschen hier wirklich? Ich habe viel mit KI recherchiert und mit vielen Menschen gesprochen – mit Kandidierenden, mit Mitgliedern der Stadtverordnetenversammlung, mit Leuten aus der Stadt.
+Also habe ich angefangen zu recherchieren: Wer kandidiert, was wollen die Kandidierenden, welche Probleme haben die Menschen hier wirklich? Ich habe viel mit KI recherchiert und mit vielen Menschen gesprochen, mit Kandidierenden, mit Mitgliedern der Stadtverordnetenversammlung, mit Leuten aus der Stadt.
 
-Ein Satz ist mir dabei hängen geblieben: Viele Entscheidungen würden letztlich aus dem Bauch heraus getroffen. Ich verstehe, woher das kommt – die Unterlagen sind verstreut, die Zeit ist knapp, Ehrenamtliche entscheiden nach Feierabend. Aber ich finde: Entscheidungen über unsere Stadt sollten auf Fakten beruhen. Und die Fakten gibt es oft schon – sie sind nur schwer zu finden.
+Ein Satz ist mir dabei hängen geblieben: Viele Entscheidungen würden am Ende aus dem Bauch heraus getroffen. Ich verstehe, woher das kommt. Die Unterlagen sind verstreut, die Zeit ist knapp, und im Stadtparlament sitzen Ehrenamtliche, die nach Feierabend entscheiden. Trotzdem finde ich: Entscheidungen über unsere Stadt sollten auf Fakten beruhen.
 
-Daraus wurde Stadtstack.
+### Die Fakten gibt es. Man findet sie nur nicht.
+
+Zwei Beispiele aus Strausberg.
+
+Hat die Stadt einen Wärmeplan? Ja. Die Stadtverordnetenversammlung hat ihn am 21. Mai 2026 beschlossen. Das steht im [Amtsblatt 04/2026](https://www.stadt-strausberg.de/wp-content/uploads/2026/06/2026_04_Amtsblatt_SRB.pdf) auf Seite 4. Wer das nicht weiß, sucht lange.
+
+Wie gut ist das Internet? Für 82 Prozent der Haushalte ist Gigabit-Festnetz verfügbar. In der Gruppe der 15 ähnlich großen Orte liegt der mittlere Wert bei 97 Prozent (Bundesnetzagentur, Breitbandatlas, Stand Juni 2026).
+
+![Stadtkompass, Profil Strausberg: Wo weicht die Stadt von ähnlich großen Orten ab? Quellen: BBSR (INKAR), Bundesnetzagentur. Strukturierte Quellen, nicht unabhängig geprüft.](/blog/der-stack/abweichungen.webp)
+
+Solche Angaben sind öffentlich. Sie liegen bei der Bundesnetzagentur, bei den Statistischen Ämtern, in Ratsinformationssystemen und Amtsblättern. Aber sie sind über Dutzende Portale, Tabellen und PDF-Anhänge verteilt. Niemand, der ehrenamtlich im Stadtparlament sitzt, hat die Zeit, das zusammenzusuchen.
+
+Ob 82 Prozent ein Problem sind, entscheidet keine Software. Das beurteilen die Menschen in der Stadt und ihr Rat. Aber die Zahl gehört auf den Tisch, bevor entschieden wird. Daraus wurde Stadtstack.
 
 ### Warum kleine Städte
 
-Ich lebe in Strausberg. Röbel an der Müritz ist die Stadt, in der ein Freund wohnt. Und ich komme aus Stimpfach, einem Ort, der noch viel kleiner ist. Große Städte haben Datenportale, Digitalabteilungen und Beratungsbudgets. Kleine Städte und Gemeinden haben oft nichts davon – aber dieselben Fragen: Wärmeplanung, Solar und Wind, Wohnen, Schulen, Verkehr, Haushalt. Genau dort will ich ansetzen, und genau dort möchte ich später auch hin.
+Ich lebe in Strausberg. In Röbel an der Müritz wohnt ein Freund. Und ich komme aus Stimpfach, einem Ort, der noch viel kleiner ist. Auch dort möchte ich das später machen.
 
-### Der Weg: von alten Ideen zu einem Stapel
+Große Städte haben Datenportale, Digitalabteilungen und Beratungsbudgets. Kleine Gemeinden haben oft nichts davon, aber dieselben Fragen: Wärmeplanung, Solar und Wind, Wohnen, Schulen, Verkehr, Haushalt. Und sie sind die Mehrheit. In den drei Landkreisen, die ich bisher erfasse, liegen 319 Gemeinden. Die Hälfte hat weniger als rund 630 Einwohnerinnen und Einwohner, nur 17 haben mehr als 10.000.
 
-Stadtstack ist nicht am Reißbrett entstanden, sondern aus Experimenten – manche davon älter als das Projekt selbst:
+### Der Weg: Umwege, die sich gelohnt haben
 
-- **ZK Loyalty** stammt ursprünglich von einem Hackathon vor ein paar Jahren: ein Treueprogramm für lokale Läden mit Zero-Knowledge-Technik. Im Stadtkontext bekam es einen neuen Sinn.
+Stadtstack ist nicht am Reißbrett entstanden, sondern aus Versuchen. Manche sind älter als das Projekt.
+
+- **ZK Loyalty** stammt von einem Hackathon vor ein paar Jahren: ein Treueprogramm für lokale Läden, bei dem Kundinnen und Kunden selbst entscheiden, was sie offenlegen. Im Stadtkontext bekam es einen neuen Sinn und heißt jetzt *Ladenrunde*.
 - **Die Mietkaution** war ebenfalls eine ältere Idee. In *Ledger of Life* lebt sie in anderer Form weiter.
-- **ZK Residency** war die erste App, die ich nach dem Einstieg in Civic Tech gebaut habe: Wie kann man nachweisen, dass man in einer Stadt wohnt, ohne mehr preiszugeben als nötig? Daraus wurde die Beteiligungsseite *Mitmachen*.
-- **Die Röbel-App** stammt ursprünglich von einem Freund. Ich habe ihn als einen der Gewinner eines Hackathons kennengelernt; wir haben ähnliche Ziele und haben uns zusammengetan. Ich habe seine App geforkt und daran weitergebaut. Der Ausgangspunkt war eine einfache Beobachtung: Menschen beschweren sich auf Facebook über ihre Stadt – aber bei wem eigentlich? Das löst nichts. Die Idee: ein soziales Netz für die Stadt, in dem man Probleme meldet und die *Stadt-KI* markiert. Sie bereitet daraus einen Vorschlag mit Quellen vor, der an Stadtverordnete und die zuständigen Fachbereiche geht. Die können mit KI-Unterstützung daran arbeiten und den Menschen schneller Rückmeldung geben. Diese Oberfläche soll künftig in *Ledger of Life* und *Mitmachen* aufgehen.
-- **3D-Karten und ein Spiel**, gebaut aus OpenStreetMap und anderen offenen Daten, sollen zeigen, was in der Stadt tatsächlich passiert – anschaulich statt in PDF-Anhängen.
+- **ZK Residency** war die erste App, die ich nach dem Einstieg in dieses Thema gebaut habe. Die Frage dahinter: Wie weist man nach, dass man in einer Stadt wohnt, ohne seine Adresse offenzulegen? Daraus wurde die Beteiligungsseite *Mitmachen*.
+- **Die Röbel-App** stammt ursprünglich von einem Freund. Ich habe ihn als einen der Gewinner eines Hackathons kennengelernt, wir haben ähnliche Ziele und haben uns zusammengetan. Ich habe seine App geforkt und daran weitergebaut. Der Ausgangspunkt: Menschen beschweren sich auf Facebook über ihre Stadt, aber bei wem eigentlich? Das löst nichts. Die Idee ist ein soziales Netz für die Stadt. Man meldet ein Problem und markiert die *Stadt-KI*. Sie bereitet daraus einen Vorschlag mit Quellen vor, der an die Stadtverordneten und die zuständigen Fachbereiche geht, und die Menschen bekommen schneller eine Rückmeldung. Diese Oberfläche soll künftig in *Ledger of Life* und *Mitmachen* aufgehen.
+- **3D-Karten und ein Spiel** aus OpenStreetMap und anderen offenen Daten zeigen, was in der Stadt passiert, anschaulich statt in PDF-Anhängen.
 
-Irgendwann wurde klar, dass all diese Oberflächen dasselbe brauchen: verlässliches Wissen über die Stadt. Daraus entstand die Idee eines *Stapels* – eines Stacks – mit vier Ebenen, bei dem die Ergebnisse wieder zurück ins Stadtwissen fließen.
+Irgendwann wurde klar: All diese Oberflächen brauchen dasselbe, nämlich verlässliches Wissen über die Stadt. Daraus entstand der Gedanke eines Stapels mit vier Ebenen.
 
 {{timeline}}
 
+### Der Stack: vier Ebenen, ein Kreislauf
+
+Das Modell auf der Startseite zeigt denselben Platz viermal: gebaut, gemessen, beraten, verändert. Die Ebenen bauen aufeinander auf, und was umgesetzt wird, fließt als neues Wissen zurück. Eine Stadt muss außerdem nicht alles selbst herausfinden. Wenn Städte sich vergleichen können, sehen sie, was anderswo funktioniert hat.
+
 {{stack}}
 
-### Ebene 1 · Infrastruktur bereitstellen
-*Was trägt und verbindet die Stadt?*
+### Ebene 1 · Infrastruktur: Was trägt, auch wenn etwas ausfällt?
 
-![Ebene 01 im Modell: Infrastruktur](/blog/der-stack/ebene-1.webp)
+Alles läuft auf eigener Infrastruktur statt bei einem großen Cloud-Anbieter: gemietete Server in der EU, ein privates Netz und ein Heimserver. Wenn Städte ihre Daten und Werkzeuge nicht selbst kontrollieren, hängt ihre Handlungsfähigkeit an anderen.
 
-Alles läuft selbst gehostet: ein eigener Kubernetes-Cluster (Talos) bei Hetzner, ein privates Overlay-Netz (NetBird) und ein Heimserver. Datensouveränität ist für mich kein Schlagwort – wenn Städte ihre Daten und Werkzeuge nicht selbst kontrollieren können, hängt ihre Handlungsfähigkeit an Dritten.
+Der zweite Teil ist Vorsorge für den Ausfall. Das ist keine Theorie mehr: Anfang November 2026 fielen nach mutmaßlichen Cyberangriffen in Supermärkten in mehreren europäischen Ländern Kühl- und Gefriertruhen aus ([Reuters](https://www.reuters.com/business/retail-consumer/temperature-soars-swedish-grocery-store-freezers-one-store-blames-hackers-2026-11-02), [BBC](https://www.bbc.co.uk/news/articles/cwy8lm1m59mvo)). Im September wurden 5,8 Terabyte gestohlener Daten der Berliner Verwaltung veröffentlicht, möglicherweise auch Daten zur kritischen Infrastruktur ([ZEIT](https://www.zeit.de/politik/deutschland/2026-09/cyberangriff-berlin-rhysida-hackergruppe-senatsverwaltung-datenleck), [taz](https://taz.de/Fiasko-nach-Hackerangriff-in-Berlin/!6210542)). Solches Material kann weitere Angriffe erleichtern.
 
-Der zweite Teil dieser Ebene ist **Resilienz**. Was passiert, wenn das Internet ausfällt – bei einem Hochwasser, einem Stromausfall oder einem Angriff auf kritische Infrastruktur? Das ist keine Theorie mehr: Anfang November 2026 fielen nach mutmaßlichen Cyberangriffen in Supermärkten in mehreren europäischen Ländern Kühl- und Gefriertruhen aus ([Reuters](https://www.reuters.com/business/retail-consumer/temperature-soars-swedish-grocery-store-freezers-one-store-blames-hackers-2026-11-02), [BBC](https://www.bbc.co.uk/news/articles/cwy8lm1m59mvo)). Im September wurden 5,8 Terabyte gestohlener Daten der Berliner Verwaltung veröffentlicht, möglicherweise auch Daten zur kritischen Infrastruktur ([ZEIT](https://www.zeit.de/politik/deutschland/2026-09/cyberangriff-berlin-rhysida-hackergruppe-senatsverwaltung-datenleck), [taz](https://taz.de/Fiasko-nach-Hackerangriff-in-Berlin/!6210542)) – Material, das weitere Angriffe erleichtern kann. In der *Offline-Mesh-Stadt* habe ich getestet, wie kleine Nachrichten und Zahlungen über LoRa-Funk und Reticulum von Gerät zu Gerät kommen, ganz ohne Internet. Langfristig denke ich an Mesh-Verbindungen zwischen Städten und an lokale KI, die auch offline hilft.
+Ich habe deshalb getestet, wie kurze Nachrichten und Zahlungen ganz ohne Internet von Gerät zu Gerät kommen, über Funk mit großer Reichweite (LoRa und Reticulum). Für jede der 319 Gemeinden gibt es außerdem ein Stadtpaket zum Herunterladen, das offline funktioniert. Langfristig denke ich an Funkverbindungen zwischen Städten und an lokale KI, die auch ohne Netz hilft.
 
-> **Stand & Grenzen:** Cluster und Netz laufen produktiv für Stadtstack. Das Mesh ist eine Labor-Demo mit einem einzigen Funk-Hop – kein stadtweites Netz, kein einsatzbereites Zahlungssystem. Testeinheiten haben keinen Geldwert.
+> **Stand & Grenzen:** Server und Netz laufen im Betrieb. Die Funkstrecke ist ein Laborversuch über eine einzige Etappe, kein stadtweites Netz und kein einsatzbereites Zahlungssystem. Testeinheiten haben keinen Geldwert.
 
-### Ebene 2 · Wahrnehmen & verstehen
-*Was passiert vor Ort, und was bedeutet es?*
+### Ebene 2 · Wissen: Was passiert vor Ort?
 
-![Ebene 02 im Modell: Wissen](/blog/der-stack/ebene-2.webp)
-![Stadtkompass: Stadtprofil Strausberg aus der Live-Ebene](/blog/der-stack/stadtkompass.webp)
+Das ist inzwischen das Herzstück. Ich sammle öffentliche kommunale Quellen und bereite sie so auf, dass jede Angabe ihre Quelle und ihr Datum behält.
 
-Das ist inzwischen das Herzstück. Die **Civic-Data-Pipeline** sammelt öffentliche kommunale Quellen – Ratsinformationssysteme, Beschlüsse, Haushalte, das Marktstammdatenregister für Energieanlagen, amtliche Statistik, OpenStreetMap – und bereitet sie so auf, dass Antworten nachvollziehbar bleiben: mit Quelle, Datum und klaren Grenzen.
+- **Der Stadtkompass** zeigt für alle 319 Gemeinden der drei Landkreise ein Profil: Bevölkerung, Finanzen, Energie, Versorgung, Erreichbarkeit. Er vergleicht jeden Ort mit ähnlich großen Orten und zeigt die größten Abweichungen.
+- **Energie:** rund 78.000 Anlagen aus dem Marktstammdatenregister, wöchentlich aktualisiert.
+- **Ratsdaten:** gut 5.500 Vorlagen aus 33 Gemeinden, mit Beschlüssen, wo sie ausgewiesen sind.
+- **Wärmeplanung:** Ich habe für alle 319 Gemeinden nach Belegen gesucht. Gefunden habe ich einen beschlossenen Plan (Strausberg), sechs Planungen in Arbeit und 22 Gemeinden, in denen das Thema bisher nur beraten wurde. Für 290 gibt es keinen Beleg. Das heißt nicht, dass dort nichts geschieht. Es zeigt, wie wenig auffindbar ist.
+- **Ein Zugang für KI-Assistenten:** Über eine offene Schnittstelle (MCP) können Werkzeuge wie Claude oder ChatGPT diese Daten abfragen und mit Quelle antworten, statt zu raten. Dieselbe Schnittstelle versorgt später das Spiel, die Stadt-KI und die Beteiligung.
 
-Darüber liegt ein **MCP-Server**: eine Schnittstelle, über die KI-Werkzeuge diese Daten lesen können. Das MCP ist die gemeinsame Schicht für alles andere – das Spiel, die Stadt-KI, Dashboards – und es macht Städte vergleichbar.
+Daneben gibt es eine kleinere, strenger geprüfte Wissensschicht für neun Kleinstädte in Brandenburg, Schleswig-Holstein und Mecklenburg-Vorpommern. Sie soll jede Aussage bis zum Originaldokument belegen.
 
-Was ich getestet habe:
-- **Große Städte:** 8 Städte mit rund 14.600 Datensätzen aus offenen Schnittstellen (Baustellen, OSM, Ratssysteme).
-- **Kleine Städte:** eine geprüfte Wissensschicht für 9 Kleinstädte in 3 Landkreisen in Brandenburg, Schleswig-Holstein und Mecklenburg-Vorpommern.
-- **Eine Live-Ebene für alle 319 Gemeinden** dieser drei Kreise: Stammdaten, rund 78.000 Energieanlagen, Ratsdaten – inzwischen für 44 von 319 Gemeinden –, ein „Stadtkompass“ mit sechs Dimensionen und Offline-Stadtpakete.
-- **Ein fester Test mit 30 Fragen:** Richtigkeit 60/60, Quellenbelege 46/60, Nützlichkeit erst 13/60.
+> **Stand & Grenzen:** Der KI-Zugang läuft, nur lesend und mit persönlichem Zugangsschlüssel. Der Stadtkompass ist ein interner Prototyp und noch nicht öffentlich. Seine Daten sind als „strukturierte Quelle, nicht unabhängig geprüft“ gekennzeichnet. Ein Rang ist keine Bewertung der Lebensqualität.
 
-Die letzte Zahl ist die ehrlichste: Richtige Antworten mit Quellen reichen nicht, wenn sie nicht helfen. Ein erster Neubau der Pipeline ist an einer Architekturgrenze gescheitert, ich habe ihn ohne Veröffentlichung beendet. Der zweite Anlauf geht tiefer: Er soll Beschlüsse, abgewogene Einwendungen, Förderketten und Betreiber zuverlässig erfassen – jede Aussage belegbar bis zum Originaldokument.
+### Ebene 3 · Entscheidungen: Wer wägt ab?
 
-> **Stand & Grenzen:** Der MCP-Zugang läuft (nur lesend, persönlicher Token). Die Live-Ebene ist als „strukturierte Quelle, nicht unabhängig geprüft“ gekennzeichnet. Die Nützlichkeit ist die offene Baustelle. Mehr unter [mcp.stadtstack.eu](https://mcp.stadtstack.eu/health).
+Hier entscheidet keine Software. Entscheidungen bleiben bei Menschen. Sie sollen nur besser informiert fallen.
 
-### Ebene 3 · Beraten & entscheiden
-*Was wollen wir tun, und wer entscheidet?*
+- **Have your say** (in *Ledger of Life*) sammelt zu einem Thema Pro und Contra, zeigt sie als Grafik und ergänzt ein Meinungsbild. Themen können mehrere Städte verbinden.
+- **Die Stadt-KI** verweist auf Quellen, statt für die Stadt zu sprechen.
+- **Mitmachen** ist eine anonyme, beratende Umfrage für Strausberg. Wer teilnimmt, lässt einmal bestätigen, dass er hier wohnt. Die Abstimmung selbst lässt sich danach nicht mehr mit der Person verbinden.
 
-![Ebene 03 im Modell: Entscheidungen](/blog/der-stack/ebene-3.webp)
-![Mitmachen: beratende, anonyme Umfrage mit Passkey](/blog/der-stack/mitmachen.webp)
+![Ledger of Life: Wohnen, Kaution und gemeinsames Abwägen (Testnetz)](/blog/der-stack/ledger.webp)
+![Mitmachen: beratende, anonyme Umfrage](/blog/der-stack/mitmachen.webp)
 
-Hier geht es nicht darum, dass Software entscheidet. Entscheidungen bleiben bei Menschen – aber sie sollen informierter fallen.
+> **Stand & Grenzen:** Beteiligung bei Stadtstack ist beratend und ersetzt keine amtlichen Verfahren. Mitmachen ist noch geschlossen: Es fehlen die Menschen, die Wohnsitze bestätigen.
 
-- **Have your say** (in *Ledger of Life*) sammelt Pro und Contra zu einem Thema und zeigt sie als Sunburst, ergänzt um ein Meinungsbild. Themen können Städte verbinden.
-- **@city-ai** verweist auf Quellen, statt für die Stadt zu sprechen.
-- **Mitmachen** war eine Beteiligungsseite für Strausberg mit Wohnsitz-Nachweis über Zero-Knowledge (aus *ZK Residency*): Man kann zeigen, dass man hier wohnt, ohne seine Adresse offenzulegen.
+### Ebene 4 · Umsetzung: Was kommt bei den Menschen an?
 
-> **Stand & Grenzen:** Beteiligung bei Stadtstack ist beratend und ersetzt keine amtlichen Verfahren. Die Teilnahme bei Mitmachen ist geschlossen; die Seite bleibt zur Ansicht online.
+- **Ledger of Life** verbindet Wohnen, Mietkaution und gemeinsames Abwägen. Dazu kommen eine Karte lokaler Orte und ein Home Node für zu Hause, mit dem die App auch offline nutzbar bleibt.
+- **Ladenrunde:** Treuepunkte für lokale Läden. Kundschaft und Geschäfte finden zusammen, und die Punkte bleiben verschlüsselt.
+- **Das Spiel:** Mit den Maskottchen Mecky in Röbel und Strausi in Strausberg erkundet man echte Straßen und echte Themen, mit Quellenangaben.
+- **Maskottchen:** Japan und Korea zeigen mit ihren *Yuru-Charas*, wie sehr Figuren helfen, sich mit einem Ort zu verbinden und Botschaften zu vermitteln. Mecky und Strausi sind mein Versuch im Kleinen.
 
-### Ebene 4 · Handeln & umsetzen
-*Wie wird daraus ein sichtbares Ergebnis?*
-
-![Ebene 04 im Modell: Umsetzung](/blog/der-stack/ebene-4.webp)
-![Ledger of Life (Testnetz)](/blog/der-stack/ledger.webp)
-![Ladenrunde: Treue für lokale Läden (Sepolia-Testnetz)](/blog/der-stack/ladenrunde.webp)
 ![Das Spiel mit Mecky (Röbel) und Strausi (Strausberg)](/blog/der-stack/spiel.webp)
+![Ladenrunde: Treuepunkte für lokale Läden (Testbetrieb)](/blog/der-stack/ladenrunde.webp)
 
-- **Ledger of Life** verbindet Wohnen, Mietkaution und gemeinsames Abwägen, dazu eine Kartenebene für lokale Orte und einen Home Node für die Nutzung offline (Solana-Testnetz).
-- **ZK Loyalty / Ladenrunde:** Treue für lokale Läden, damit Kundschaft und Geschäfte zusammenfinden – ohne dass Kundendaten gesammelt werden müssen (Sepolia-Testnetz).
-- **Das Spiel:** Stadt als Spiel, ein Zugang zu Stadtstack, ohne zuerst Blockchain verstehen zu müssen.
-- **Maskottchen:** In Japan und Korea zeigen *Yuru-Charas*, wie sehr Figuren helfen, sich mit einem Ort zu identifizieren und Botschaften zu transportieren. Mit Mecky und Strausi probiere ich das im Kleinen aus.
+> **Stand & Grenzen:** Prototypen und Piloten. Alle Blockchain-Funktionen laufen auf Testnetzen. Testeinheiten haben keinen Geldwert und begründen keine Ansprüche. In der Ladenrunde sind Transaktionen derzeit pausiert.
 
-> **Stand & Grenzen:** Prototypen und Piloten. Alle Blockchain-Funktionen laufen auf Testnetzen; Testeinheiten haben keinen Geldwert und begründen keine Ansprüche.
+### Was nicht funktioniert hat
 
-### Über alle Ebenen: Wirkung fließt zurück
-
-Der Kern des Modells ist der Kreislauf: Was umgesetzt wird, wird gemessen und fließt zurück ins Stadtwissen. Und eine Stadt muss nicht alles selbst herausfinden – wenn sich Städte vergleichen können, sehen sie, was anderswo funktioniert hat, und können gemeinsam in eine bessere Richtung gehen. Rechte und Vertrauen gelten dabei auf allen Ebenen: Datenschutz, Quellen, klare Grenzen.
-
-### Was ich gelernt habe
-
-- **Die Daten sind da – aber nicht nutzbar.** Fast alles, was eine Stadtverordnete für eine Entscheidung bräuchte, ist irgendwo veröffentlicht. Das Problem ist Auffinden, Zusammenhang und Vertrauen.
-- **Richtig ist nicht gleich hilfreich.** 60/60 bei der Richtigkeit, 13/60 bei der Nützlichkeit. Das hat meine Prioritäten verschoben.
-- **Ehrlichkeit über Grenzen ist ein Feature.** Testnetz, Pilot, Labor-Demo – klar benannt schafft mehr Vertrauen als jedes Versprechen.
-- **Kleine Städte sind kein Randfall.** Sie sind die Mehrheit.
-- **Eine gemeinsame Wissensschicht trägt viele Oberflächen.** Spiel, Stadt-KI und Dashboard brauchen dasselbe Fundament.
+- **Richtig ist noch nicht hilfreich.** Die Wissensschicht für die neun Kleinstädte messe ich mit 30 festen Fragen. Bei der Richtigkeit erreicht sie 60 von 60 Punkten, bei den Quellenbelegen 46 von 60, bei der Nützlichkeit nur 13 von 60. Die Antworten stimmen, helfen aber zu selten weiter.
+- **Der erste Neubau ist gescheitert.** Einen ersten Anlauf, die Datenaufbereitung gründlicher zu bauen, habe ich Ende Oktober ohne Veröffentlichung beendet. Er stieß an eine Grenze der Architektur. Der zweite Anlauf läuft.
+- **Ratsdaten sind schwer zu bekommen.** 33 von 319 Gemeinden sind wenig. Bei 13 Quellen ist der automatische Abruf derzeit gesperrt, der Zugang ist dort noch nicht geklärt.
+- **Noch kein Alltagstest.** Die Funkstrecke ist ein Laborversuch, die Beteiligung ist geschlossen, das Treueprogramm pausiert. Mit echten Nutzerinnen und Nutzern muss sich das meiste erst bewähren.
 
 ### Wie es weitergeht
 
-- Die belegte Wissensschicht für die 9 Kleinstädte fertigstellen und messbar nützlicher machen.
-- Ratsdaten für mehr Gemeinden, neue Ratsunterlagen am selben Tag.
-- Von 9 auf 50 bis 300 Gemeinden wachsen – ohne jedes Mal alles neu zu berechnen.
-- Städtevergleich: Energiewende, Planung, Haushalt, Demografie.
+- Die geprüfte Wissensschicht für die neun Kleinstädte fertigstellen, mit Beschlüssen, Einwendungen, Förderungen und Betreibern, und sie am selben Test messen.
+- Zu jeder Abweichung zeigen, was ähnliche Orte beschlossen und gefördert haben.
+- Mehr Ratsdaten, und neue Vorlagen noch am selben Tag einordnen.
+- Von neun Kleinstädten auf 50 bis 300 Gemeinden wachsen.
 
 ### Mitmachen
 
-- **Gemeinden und Verwaltungen:** Wenn Sie wissen möchten, wie Ihre Gemeinde in den Daten aussieht, melden Sie sich.
-- **Stadtverordnete und Engagierte:** Probieren Sie den MCP-Zugang mit Ihrem KI-Werkzeug aus.
-- **Entwickler:innen und Forschende:** Lasst uns zusammenarbeiten.
-- **Alle:** Schaut euch die Projekte an und sagt mir, was fehlt.
+- **Sie arbeiten in einer Gemeinde oder Verwaltung?** Ich zeige Ihnen gern das Profil Ihres Ortes und höre, was daran falsch ist oder fehlt.
+- **Sie sitzen in einem Rat oder engagieren sich vor Ort?** Sagen Sie mir, welche Frage Sie vor der letzten Entscheidung gern beantwortet gehabt hätten.
+- **Sie entwickeln oder forschen?** Den KI-Zugang können Sie mit einem persönlichen Schlüssel ausprobieren.
 
-→ [Kontakt](https://stadtstack.eu/kontakt)
+→ [Kontakt](/kontakt)
 
 *Stadtstack ist ein unabhängiges Projekt und kein offizieller Stadtdienst.*
