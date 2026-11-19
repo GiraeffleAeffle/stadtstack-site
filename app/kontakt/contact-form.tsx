@@ -63,6 +63,6 @@ export default function ContactForm() {
       <p className="contact-privacy">{text.privacy} <a href={`/datenschutz#${language}`}>{text.privacyLink}</a>.</p>
       <button className="contact-submit" type="submit" disabled={!ready || status === "sending"}>{status === "sending" ? text.sending : text.send}</button>
       <p className={`contact-status${status === "success" ? " contact-success" : ""}`} role="status" aria-live="polite">{status !== "idle" && status !== "sending" ? text[status] : ""}</p>
-    </form><aside className="contact-aside"><h2>{text.direct}</h2><a href="mailto:contact@agentcart.eu">contact@agentcart.eu</a><p>Stadtstack<br />Maximilian Stahl</p></aside></div>
+    </form><aside className="contact-aside"><h2>{text.direct}</h2><a href="mailto:contact@stadtstack.eu">contact@stadtstack.eu</a><p>Stadtstack<br />Maximilian Stahl</p></aside></div>
   </section>;
 }
