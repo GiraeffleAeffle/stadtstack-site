@@ -12,7 +12,7 @@ RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:stable-alpine@sha256:e2a8fca8aa356d66159aaf8a877a9c126773635adf210503eefaaeaffeed6ad7
 USER root
-RUN apk add --no-cache brotli-libs=1.2.1-r0
+RUN apk add --no-cache brotli-libs=1.2.1-r0 nginx=1.30.7-r0
 COPY --from=build /app/out/ /usr/share/nginx/html/
 COPY --from=build /app/.next/export-nginx.conf /etc/nginx/nginx.conf
 USER 101
