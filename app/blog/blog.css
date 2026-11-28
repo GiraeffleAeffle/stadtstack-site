@@ -1,0 +1,47 @@
+.blog-article { max-width: 860px; margin: 0 auto; }
+.blog-article :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.blog-article .contact-eyebrow { margin: 24px 0 0; }
+.blog-article h1 { font-family: var(--serif); font-size: clamp(2.4rem, 6vw, 4.2rem); font-weight: 500; line-height: 1.08; margin: 28px 0 12px; }
+.blog-subtitle { font-family: var(--serif); font-style: italic; font-size: clamp(1.2rem, 2.4vw, 1.55rem); color: #2f7d80; line-height: 1.35; margin: 0 0 32px; max-width: 720px; }
+.blog-article h2 { font-family: var(--serif); font-size: clamp(1.55rem, 3vw, 2.1rem); font-weight: 500; line-height: 1.25; margin: 56px 0 16px; padding-top: 28px; border-top: 1px solid var(--line); scroll-margin-top: 24px; }
+.blog-article p, .blog-article li { color: var(--ink-2); font-size: 1.07rem; line-height: 1.8; }
+.blog-article p { margin: 0 0 18px; }
+.blog-article ul { margin: 0 0 22px; padding-left: 1.3rem; }
+.blog-article li { margin-bottom: 10px; }
+.blog-article li::marker { color: var(--ink-3); }
+.blog-article strong { color: var(--ink); font-weight: 650; }
+.blog-article a { color: var(--trust); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+.blog-question { font-family: var(--serif); font-style: italic; font-size: 1.2rem !important; color: var(--ink-3) !important; margin-top: -6px !important; }
+.blog-status { margin: 22px 0 8px; padding: 18px 22px; border-left: 4px solid var(--trust); border-radius: 0 var(--radius) var(--radius) 0; background: var(--card); color: var(--ink-2); line-height: 1.7; box-shadow: 0 1px 0 var(--line); }
+.blog-toc { margin: 0 0 40px; padding: 22px 26px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); }
+.blog-article .blog-toc h2 { font-size: 1.2rem; margin: 0 0 12px; padding: 0; border: 0; }
+.blog-toc ol { margin: 0; padding-left: 1.3rem; columns: 2; column-gap: 32px; }
+.blog-toc li { font-size: .97rem; line-height: 1.5; margin-bottom: 6px; break-inside: avoid; }
+.blog-figures { margin: 26px 0 30px; }
+.blog-figures--grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.blog-figures figure, .blog-diagram, .blog-timeline { margin: 0; }
+.blog-figures img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); }
+.blog-figures figcaption, .blog-diagram figcaption { margin-top: 8px; font-size: .88rem; color: var(--ink-3); }
+.blog-diagram { margin: 30px 0 34px; padding: 18px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); }
+.blog-diagram svg { display: block; width: 100%; height: auto; }
+.blog-diagram .d-eyebrow { font: 600 12px var(--sans); letter-spacing: .12em; }
+.blog-diagram .d-badge { font: 600 12px var(--sans); }
+.blog-diagram .d-name { font: 600 17px var(--sans); }
+.blog-diagram .d-items { font: 400 13.5px var(--sans); }
+.blog-diagram .d-flow { font: italic 600 14px var(--sans); }
+.blog-timeline { margin: 30px 0 34px; padding: 22px 26px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--card); }
+.blog-timeline figcaption { font-family: var(--serif); font-size: 1.25rem; color: var(--ink); margin-bottom: 18px; }
+.blog-timeline ol { list-style: none; margin: 0; padding: 0 0 0 26px; border-left: 2px solid var(--line); }
+.blog-timeline li { position: relative; display: grid; gap: 2px; margin: 0 0 20px; }
+.blog-timeline li:last-child { margin-bottom: 0; }
+.blog-timeline li::before { content: ""; position: absolute; left: -34px; top: 6px; width: 14px; height: 14px; border-radius: 50%; background: var(--dot); box-shadow: 0 0 0 4px var(--card); }
+.blog-timeline-when { font-family: var(--mono); font-size: .8rem; color: var(--ink-3); text-transform: uppercase; letter-spacing: .04em; }
+.blog-timeline strong { font-size: 1.05rem; }
+.blog-timeline-detail { color: var(--ink-2); font-size: .97rem; line-height: 1.55; }
+@media (max-width: 700px) {
+  .blog-figures--grid { grid-template-columns: minmax(0, 1fr); }
+  .blog-toc ol { columns: 1; }
+  .blog-diagram { padding: 10px; overflow-x: auto; }
+  .blog-diagram svg { min-width: 640px; }
+  .blog-timeline { padding: 18px; }
+}
